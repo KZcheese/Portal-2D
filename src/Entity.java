@@ -10,7 +10,7 @@ public abstract class Entity {
 	
 	private Point2D position;
 	private SpriteSheet sSheet;
-	private double timeScale, speed, maxSpeed, acceleration, angle;
+	private double timeScale, speed, maxSpeed, acceleration, angle, moveAngle;
 	private Rectangle2D bounds;
 	private Level level;
 
@@ -28,6 +28,10 @@ public abstract class Entity {
 
 	}
 	
+	public void updatePosition() {
+		
+	}
+	
 	public void move(double dist, double angle) {
 		double dx = Math.cos(angle) * dist, dy = Math.sin(angle) * dist;
 	}
@@ -35,5 +39,17 @@ public abstract class Entity {
 	public void fix(Point2D p2) {
 		Point2D p1 = position;
 		List<Entity> entities = level.getEntities();
+		boolean collided = false;
+		double dist = 0, toMove = position.distance(p2);
+		do {
+			for (Entity e : entities) {
+				if (bounds.intersects(e.bounds)) {
+					collided = true;
+				} else {
+					double distMoved = MOVEMENT_INCREMENT * timeScale;
+					move(distMoved, angle);
+				}
+			}
+		} while (dist  !collided);
 	}
 }
