@@ -3,7 +3,6 @@ import java.awt.geom.Rectangle2D;
 import java.util.List;
 
 public abstract class Entity {
-<<<<<<< HEAD
 	public static final double 
 		AIR_RESISTANCE = 1,
 		GRAVITY = 1,
@@ -14,19 +13,11 @@ public abstract class Entity {
 	private double timeScale, speed, maxSpeed, acceleration, angle;
 	private Rectangle2D bounds;
 	private Level level;
-	
-=======
-	public static final double AIR_RESISTANCE = 1, GRAVITY = 1;
-
-	private Point2D position;
-	private SpriteSheet sSheet;
-	private double timeScale, speed, maxSpeed, acceleration, angle;
 
 	public Point2D getPosition() {
 		return position;
 	}
-
->>>>>>> origin/master
+	
 	public void update() {
 		double dx = speed * Math.cos(angle) * timeScale, dy = speed
 				* Math.sin(angle) * timeScale;
@@ -36,19 +27,13 @@ public abstract class Entity {
 		acceleration -= AIR_RESISTANCE;
 
 	}
-<<<<<<< HEAD
 	
 	public void move(double dist, double angle) {
-		double dx = Math.cos(angle) * dist, dy = 
+		double dx = Math.cos(angle) * dist, dy = Math.sin(angle) * dist;
 	}
 	
 	public void fix(Point2D p2) {
 		Point2D p1 = position;
 		List<Entity> entities = level.getEntities();
-		boolean 
 	}
-	
-=======
-
->>>>>>> origin/master
 }
