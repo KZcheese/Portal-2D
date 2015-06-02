@@ -8,12 +8,7 @@ public class QuadTree {
 	public QuadTree(Level level) {
 		double centerX = level.getBounds().getCenterX();
 		double centerY = level.getBounds().getCenterY();
-		head = new Node(new Point2D.Double(centerX, centerY));
-	}
-
-	public void update() {
-		for (Node n : iterate)
-			n.p = n.value.getPosition();
+		// head = new Node(new Entity);
 	}
 
 	public void add(Entity e) {
@@ -41,16 +36,10 @@ public class QuadTree {
 
 	private class Node {
 		Entity value;
-		Point2D p;
 		Node[] next = new Node[4];
 
 		public Node(Entity value) {
 			this.value = value;
-			p = value.getPosition();
-		}
-
-		public Node(Point2D p) {
-			this.p = p;
 		}
 	}
 }
