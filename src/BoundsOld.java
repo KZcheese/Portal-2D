@@ -1,13 +1,15 @@
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 
-public class Bounds {
-<<<<<<< HEAD
+public class BoundsOld {
 	private Point2D center;
 	private Area area;
 	private double angle;
 	
-	public Bounds(Shape... shapes) {
+	public BoundsOld(Shape... shapes) {
 		area = new Area();
 		for (Shape shape : shapes) {
 			area.add(new Area(shape));
@@ -28,7 +30,7 @@ public class Bounds {
 		return center.getY();
 	}
 	
-	public boolean intersects(Bounds b) {
+	public boolean intersects(BoundsOld b) {
 		Area intersection = (Area) area.clone();
 		intersection.intersect(b.area);
 		return !intersection.isEmpty();
@@ -36,42 +38,43 @@ public class Bounds {
 	
 	public void setCenter(Point2D p) {
 		double dx = p.getX() - center.getX(), dy = p.getY() - center.getY();
-		center.setLocation(p);
+		center.setLocation(center.getX() + dx, center.getY() + dy);
 		area.transform(AffineTransform.getTranslateInstance(dx, dy));
 	}
 	
+	/**
+	 * Rotates the bounds to face the specified angle.
+	 * @param angle The angle of the bounds
+	 */
 	public void setAngle(double angle) {
 		area.transform(AffineTransform.getRotateInstance(angle - this.angle, center.getX(), center.getY()));
 		this.angle = angle;
 	}
 	
+	/**
+	 * Returns the underlying area of the bounds.
+	 * @return The area of the bounds
+	 */
 	public Area getArea() {
 		return area;
 	}
 	
-	public void offset(double x, double y) {
-		area.transform(AffineTransform.getTranslateInstance(x, y));
+	/**
+	 * Translates the bounds a specified 
+	 * @param dx The X distance to translate
+	 * @param dy The Y distance to translate
+	 */
+	public void translate(double dx, double dy) {
+		area.transform(AffineTransform.getTranslateInstance(dx, dy));
 	}
 	
+	/**
+	 * Returns true if the bounds contains the specified point, and
+	 * false otherwise.
+	 * @param point The point to check
+	 * @return Whether or not the bounds contains the point
+	 */
 	public boolean contains(Point2D point) {
 		return area.contains(point);
 	}
-	
-	public Bounds copy() {
-		Area a = new Area();
-		a.add(area);
-		return new Bounds(a);
-	}
-=======
-	Rectangle2D hitBox;
-
-	public Bounds(Point2D p, double width, double height) {
-		hitBox = new Rectangle2D.Double(p.getX(), p.getY(), width, height);
-	}
-
-	public Bounds(Rectangle2D hitBox) {
-		this.hitBox = hitBox;
-	}
-
->>>>>>> origin/master
 }

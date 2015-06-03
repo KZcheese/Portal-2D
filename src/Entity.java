@@ -27,6 +27,10 @@ public class Entity {
 		this.location = location;
 	}
 	
+	public Point2D getLocation() {
+		return location;
+	}
+	
 	public void setLevel(Level l) {
 		level = l;
 	}
@@ -71,7 +75,6 @@ public class Entity {
 		dx += Math.cos(angle) * speedCurrent;
 		dy += Math.sin(angle) * speedCurrent;
 		
-		// Update position
 		move(dx, dy);
 	}
 	
