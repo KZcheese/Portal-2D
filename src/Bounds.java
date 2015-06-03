@@ -38,43 +38,30 @@ public class Bounds {
 	
 	public void setCenter(Point2D p) {
 		double dx = p.getX() - center.getX(), dy = p.getY() - center.getY();
-		center.setLocation(center.getX() + dx, center.getY() + dy);
+		center.setLocation(p);
 		area.transform(AffineTransform.getTranslateInstance(dx, dy));
 	}
 	
-	/**
-	 * Rotates the bounds to face the specified angle.
-	 * @param angle The angle of the bounds
-	 */
 	public void setAngle(double angle) {
 		area.transform(AffineTransform.getRotateInstance(angle - this.angle, center.getX(), center.getY()));
 		this.angle = angle;
 	}
 	
-	/**
-	 * Returns the underlying area of the bounds.
-	 * @return The area of the bounds
-	 */
 	public Area getArea() {
 		return area;
 	}
 	
-	/**
-	 * Translates the bounds a specified 
-	 * @param dx The X distance to translate
-	 * @param dy The Y distance to translate
-	 */
-	public void translate(double dx, double dy) {
-		area.transform(AffineTransform.getTranslateInstance(dx, dy));
+	public void offset(double x, double y) {
+		area.transform(AffineTransform.getTranslateInstance(x, y));
 	}
 	
-	/**
-	 * Returns true if the bounds contains the specified point, and
-	 * false otherwise.
-	 * @param point The point to check
-	 * @return Whether or not the bounds contains the point
-	 */
 	public boolean contains(Point2D point) {
 		return area.contains(point);
+	}
+	
+	public Bounds copy() {
+		Area a = new Area();
+		a.add(area);
+		return new Bounds(a);
 	}
 }
