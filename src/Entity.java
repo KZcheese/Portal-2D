@@ -10,7 +10,7 @@ public class Entity {
 	private Level level;
 	private boolean usePhysics;
 
-	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale;
+	private double moveAccel, gravityAccel, speed, speedCurrent, angle;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
@@ -115,13 +115,5 @@ public class Entity {
 
 	public void enablePhysics(boolean physics) {
 		usePhysics = physics;
-	}
-	
-	public void setTimeScale(double timeScale) {
-		this.timeScale = timeScale;
-	}
-	
-	public double getTimeScale() {
-		return timeScale;
 	}
 }
