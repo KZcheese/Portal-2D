@@ -70,8 +70,10 @@ public class Level {
 	}
 
 	public void render(Graphics g) {
-		for (Entity e : entities) {
-			e.render(g);
+		if (entities != null) {
+			for (Entity e : entities) {
+				e.render(g);
+			}
 		}
 	}
 
