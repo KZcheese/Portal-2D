@@ -2,10 +2,11 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Level {
-	private List<Entity> entities;
+	private List<Entity> entities = new LinkedList<Entity>();
 	private Point corner;
 
 	public void update() {
@@ -41,18 +42,23 @@ public class Level {
 								if (hd < vd) {
 									if (bounds1.getCenterX() < bounds2
 											.getCenterX())
-										;
+										e.move(bounds1.getMaxX()
+												- bounds2.getMinX(), 0.0);
 									// Collision on right side of player
 									else
-										;
+										e.move(bounds1.getMinX()
+												- bounds2.getMaxX(), 0.0);
 									// Collision on left side of player
 								} else if (vd < hd) {
 									if (bounds1.getCenterY() < bounds2
 											.getCenterY())
-										;
+										e.move(bounds1.getMaxY()
+												- bounds2.getMinY(), 0.0);
 									// Collision on bottom side of player
 									else
-										;
+										e.move(bounds1.getMinY()
+												- bounds2.getMaxY(), 0.0);
+
 									// Collision on top side of player
 								}
 							}
