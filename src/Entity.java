@@ -77,7 +77,7 @@ public class Entity {
 		move(dx, dy);
 	}
 
-	private void move(double dx, double dy) {
+	public void move(double dx, double dy) {
 		location.setLocation(location.getX() + dx, location.getY() + dy);
 		bounds.setFrame(location.getX(), location.getY(), bounds.getWidth(),
 				bounds.getHeight());
@@ -124,4 +124,5 @@ public class Entity {
 	public double getTimeScale() {
 		return timeScale;
 	}
+
 }
