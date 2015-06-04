@@ -124,5 +124,9 @@ public class Entity {
 	public double getTimeScale() {
 		return timeScale;
 	}
+	
+	public void resetMovementAcceleration() {
+		moveAccel = 0;
+	}
 
 }
