@@ -40,6 +40,7 @@ public class Level {
 								// collision
 
 								if (hd < vd) {
+									e.resetMovementAcceleration();
 									if (bounds1.getCenterX() < bounds2
 											.getCenterX())
 										e.move(bounds1.getMaxX()
@@ -50,6 +51,7 @@ public class Level {
 												- bounds2.getMaxX(), 0.0);
 									// Collision on left side of player
 								} else if (vd < hd) {
+									e.resetGravity();
 									if (bounds1.getCenterY() < bounds2
 											.getCenterY())
 										e.move(bounds1.getMaxY()
