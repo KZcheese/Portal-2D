@@ -40,6 +40,9 @@ public class Test {
 		
 		t.start();
 		
+		Entity e = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
+		l.addEntity(e);
+		
 		frame.pack();
 		frame.setVisible(true);
 	}

@@ -6,8 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Level {
-	private List<Entity> entities = new LinkedList<Entity>();
+	private List<Entity> entities;
 	private Point corner;
+	
+	public Level() {
+		entities = new LinkedList<>();
+		corner = new Point();
+	}
 
 	public void update() {
 		for (Entity e : entities) {
