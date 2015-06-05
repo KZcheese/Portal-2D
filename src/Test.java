@@ -32,6 +32,9 @@ public class Test {
 		final Entity entity = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
 		entity.pushForward();
 		
+		Entity wall = new Entity(new Rectangle2D.Double(200, 0, 0, 200));
+		l.addEntity(wall);
+		
 		final int[] a = {0};
 		Timer t = new Timer(16, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
