@@ -10,7 +10,6 @@ public class Level {
 	private Point corner;
 
 	public static final double BORDER_WIDTH = 100;
-	
 
 	public Level() {
 		entities = new LinkedList<>();
@@ -27,7 +26,6 @@ public class Level {
 				for (Entity e2 : entities) {
 					if (e2 != e) {
 						Rectangle2D bounds2 = e2.getBounds();
-						Rectangle2D collision = null;
 						if (bounds1.intersects(bounds2)) {
 							// Calculate the vertical and horizontal
 							// length between the centres of rectangles
