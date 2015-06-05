@@ -8,10 +8,15 @@ import java.util.List;
 public class Level {
 	private List<Entity> entities;
 	private Point corner;
+<<<<<<< HEAD
 	
 	public static final double BORDER_WIDTH = 100;
 	
 	public Level(Rectangle2D bounds) {
+=======
+
+	public Level() {
+>>>>>>> origin/master
 		entities = new LinkedList<>();
 		corner = new Point();
 		
@@ -52,48 +57,46 @@ public class Level {
 						Rectangle2D bounds2 = e2.getBounds();
 						Rectangle2D collision = null;
 						if (bounds1.intersects(bounds2)) {
-							{
-								// Calculate the vertical and horizontal
-								// length between the centres of rectangles
+							// Calculate the vertical and horizontal
+							// length between the centres of rectangles
 
-								double hd = Math
-										.abs((bounds1.getCenterX() * bounds1
-												.getCenterX())
-												+ (bounds2.getCenterX() * bounds2
-														.getCenterX()));
-								double vd = Math
-										.abs((bounds1.getCenterY() * bounds1
-												.getCenterY())
-												+ (bounds2.getCenterY() * bounds2
-														.getCenterY()));
-
-								// Now compare them to know the side of
-								// collision
-
-								if (hd < vd) {
-									e.resetMovementAcceleration();
-									if (bounds1.getCenterX() < bounds2
+							double hd = Math
+									.abs((bounds1.getCenterX() * bounds1
 											.getCenterX())
-										e.move(bounds1.getMaxX()
-												- bounds2.getMinX(), 0.0);
-									// Collision on right side of player
-									else
-										e.move(bounds1.getMinX()
-												- bounds2.getMaxX(), 0.0);
-									// Collision on left side of player
-								} else if (vd < hd) {
-									e.resetGravity();
-									if (bounds1.getCenterY() < bounds2
+											+ (bounds2.getCenterX() * bounds2
+													.getCenterX()));
+							double vd = Math
+									.abs((bounds1.getCenterY() * bounds1
 											.getCenterY())
-										e.move(bounds1.getMaxY()
-												- bounds2.getMinY(), 0.0);
-									// Collision on bottom side of player
-									else
-										e.move(bounds1.getMinY()
-												- bounds2.getMaxY(), 0.0);
+											+ (bounds2.getCenterY() * bounds2
+													.getCenterY()));
 
-									// Collision on top side of player
-								}
+							// Now compare them to know the side of
+							// collision
+
+							if (hd < vd) {
+								e.resetMovementAcceleration();
+								if (bounds1.getCenterX() < bounds2.getCenterX())
+									e.move(bounds1.getMaxX()
+											- bounds2.getMinX(), 0.0);
+								// Collision on right side of player
+								else
+									e.move(bounds1.getMinX()
+											- bounds2.getMaxX(), 0.0);
+								// Collision on left side of player
+							} else if (vd < hd) {
+								e.resetGravity();
+								if (bounds1.getCenterY() < bounds2.getCenterY())
+									e.move(0.0,
+											bounds1.getMaxY()
+													- bounds2.getMinY());
+								// Collision on bottom side of player
+								else
+									e.move(0.0,
+											bounds1.getMinY()
+													- bounds2.getMaxY());
+
+								// Collision on top side of player
 							}
 						}
 					}
