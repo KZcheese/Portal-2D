@@ -10,11 +10,10 @@ public class Entity {
 	private Level level;
 	private boolean usePhysics;
 
-	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale;
-	
-	public static final double
-		GRAVITY = 0.01,
-		FRICTION = 0.01;
+	private double moveAccel, gravityAccel, speed, speedCurrent, angle,
+			timeScale;
+
+	public static final double GRAVITY = 0.01, FRICTION = 0.01;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
@@ -76,7 +75,6 @@ public class Entity {
 			moveAccel = 0;
 		}
 		moveAccel -= FRICTION;
-
 		dx += Math.cos(angle) * speedCurrent;
 		dy += Math.sin(angle) * speedCurrent;
 
@@ -122,15 +120,15 @@ public class Entity {
 	public void enablePhysics(boolean physics) {
 		usePhysics = physics;
 	}
-	
+
 	public void setTimeScale(double timeScale) {
 		this.timeScale = timeScale;
 	}
-	
+
 	public double getTimeScale() {
 		return timeScale;
 	}
-	
+
 	public void resetMovementAcceleration() {
 		moveAccel = 0;
 	}
