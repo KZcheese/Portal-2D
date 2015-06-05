@@ -13,6 +13,7 @@ public class Test {
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Test");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		class Renderer extends JComponent {
 			public Level level;
 			
@@ -32,6 +33,7 @@ public class Test {
 			public void actionPerformed(ActionEvent e) {
 				l.update();
 				r.repaint();
+				System.out.println("updating");
 			}
 		});
 		
@@ -41,6 +43,7 @@ public class Test {
 		t.start();
 		
 		Entity e = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
+		e.pushForward();
 		l.addEntity(e);
 		
 		frame.pack();

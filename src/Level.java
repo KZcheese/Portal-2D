@@ -88,10 +88,12 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		entities.add(e);
+		e.setLevel(this);
 	}
 
 	public void removeEntity(Entity e) {
 		entities.remove(e);
+		e.setLevel(null);
 	}
 
 	public List<Entity> getEntities() {
