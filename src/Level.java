@@ -56,12 +56,14 @@ public class Level {
 							} else if (vd < hd) {
 								e.resetGravity();
 								if (bounds1.getCenterY() < bounds2.getCenterY())
-									e.move(bounds1.getMaxY()
-											- bounds2.getMinY(), 0.0);
+									e.move(0.0,
+											bounds1.getMaxY()
+													- bounds2.getMinY());
 								// Collision on bottom side of player
 								else
-									e.move(bounds1.getMinY()
-											- bounds2.getMaxY(), 0.0);
+									e.move(0.0,
+											bounds1.getMinY()
+													- bounds2.getMaxY());
 
 								// Collision on top side of player
 							}
