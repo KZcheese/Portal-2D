@@ -26,14 +26,23 @@ public class Test {
 			}
 		}
 		
-		final Level l = new Level();
+		final Level l = new Level(new Rectangle2D.Double(0, 0, 300, 300));
 		final Renderer r = new Renderer(l);
 		
+		final Entity entity = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
+		entity.pushForward();
+		
+		final int[] a = {0};
 		Timer t = new Timer(16, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				l.update();
 				r.repaint();
 				System.out.println("updating");
+				if (a[0] == 30) {
+					a[0] = 0;
+					entity.pushUp();
+				}
+				a[0]++;
 			}
 		});
 		
@@ -41,10 +50,7 @@ public class Test {
 		frame.getContentPane().add(r);
 		
 		t.start();
-		
-		Entity e = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
-		e.pushForward();
-		l.addEntity(e);
+		l.addEntity(entity);
 		
 		frame.pack();
 		frame.setVisible(true);

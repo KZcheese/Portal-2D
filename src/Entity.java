@@ -13,13 +13,13 @@ public class Entity {
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale;
 	
 	public static final double
-		GRAVITY = 0.01,
-		FRICTION = 0.01;
+		GRAVITY = 0.1,
+		FRICTION = 0.005;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double();
-		speed = 1;
+		speed = 100;
 		usePhysics = true;
 	}
 
@@ -65,17 +65,12 @@ public class Entity {
 			dy -= gravityAccel;
 			gravityAccel -= GRAVITY;
 		}
-
+		
 		// Movement
-		speedCurrent += moveAccel;
-		if (speedCurrent > speed) {
-			speedCurrent = speed;
-		}
+		speedCurrent -= FRICTION;
 		if (speedCurrent < 0) {
 			speedCurrent = 0;
-			moveAccel = 0;
 		}
-		moveAccel -= FRICTION;
 
 		dx += Math.cos(angle) * speedCurrent;
 		dy += Math.sin(angle) * speedCurrent;
@@ -108,11 +103,11 @@ public class Entity {
 	}
 
 	public void pushForward() {
-		moveAccel += 0.5;
+		speedCurrent += 2;
 	}
 
 	public void pushUp() {
-		gravityAccel -= 10;
+		gravityAccel += 3;
 	}
 
 	public boolean physicsEnabled() {
