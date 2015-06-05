@@ -8,41 +8,13 @@ import java.util.List;
 public class Level {
 	private List<Entity> entities;
 	private Point corner;
-<<<<<<< HEAD
-	
+
 	public static final double BORDER_WIDTH = 100;
 	
-	public Level(Rectangle2D bounds) {
-=======
 
 	public Level() {
->>>>>>> origin/master
 		entities = new LinkedList<>();
 		corner = new Point();
-		
-		Point2D
-			nw = new Point2D.Double(bounds.getMinX(), bounds.getMinY()),
-			ne = new Point2D.Double(bounds.getMaxX(), bounds.getMinY()),
-			sw = new Point2D.Double(bounds.getMinX(), bounds.getMaxY()),
-			se = new Point2D.Double(bounds.getMaxX(), bounds.getMaxY());
-		
-		Entity
-			left = new Entity(new Rectangle2D.Double(0, 0, BORDER_WIDTH, bounds.getHeight() + 2 * BORDER_WIDTH)),
-			right = new Entity(new Rectangle2D.Double(0, 0, BORDER_WIDTH, bounds.getHeight() + 2 * BORDER_WIDTH)),
-			top = new Entity(new Rectangle2D.Double(0, 0, bounds.getWidth(), BORDER_WIDTH)),
-			bottom = new Entity(new Rectangle2D.Double(0, 0, bounds.getWidth(), BORDER_WIDTH));
-		left.enablePhysics(false);
-		right.enablePhysics(false);
-		top.enablePhysics(false);
-		bottom.enablePhysics(false);
-		addEntity(left);
-		addEntity(right);
-		addEntity(top);
-		addEntity(bottom);
-		left.setLocation(new Point2D.Double(nw.getX() - BORDER_WIDTH, nw.getY() - BORDER_WIDTH));
-		right.setLocation(new Point2D.Double(ne.getX(), nw.getY() - BORDER_WIDTH));
-		top.setLocation(new Point2D.Double(nw.getX(), nw.getY() - BORDER_WIDTH));
-		bottom.setLocation(new Point2D.Double(sw.getX(), sw.getY()));
 	}
 
 	public void update() {

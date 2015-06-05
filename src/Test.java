@@ -26,7 +26,7 @@ public class Test {
 			}
 		}
 		
-		final Level l = new Level(new Rectangle2D.Double(0, 0, 300, 300));
+		final Level l = new Level();
 		final Renderer r = new Renderer(l);
 		
 		final Entity entity = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
