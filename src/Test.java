@@ -43,7 +43,7 @@ public class Test {
 				System.out.println("updating");
 				if (a[0] == 30) {
 					a[0] = 0;
-					entity.pushUp();
+					entity.applyForce(Math.toRadians(-45), 2);
 				}
 				a[0]++;
 			}

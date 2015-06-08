@@ -10,10 +10,10 @@ public class Entity {
 	private Level level;
 	private boolean usePhysics;
 
-	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale;
+	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale, totalAngle;
 	
 	public static final double
-		GRAVITY = 0.1,
+		GRAVITY = 0.01,
 		FRICTION = 0.005;
 
 	public Entity(Rectangle2D bounds) {
@@ -76,6 +76,7 @@ public class Entity {
 		dy += Math.sin(angle) * speedCurrent;
 
 		move(dx, dy);
+		totalAngle = Math.atan2(dy, dx);
 	}
 
 	public void move(double dx, double dy) {
@@ -127,7 +128,7 @@ public class Entity {
 	}
 
 	public void resetMovementAcceleration() {
-		moveAccel = 0;
+		speedCurrent = 0;
 	}
 
 	public void collideLeft(Entity e) {}
@@ -137,5 +138,18 @@ public class Entity {
 	public void collideTop(Entity e) {}
 	
 	public void collideBottom(Entity e) {}
+	
+	public void applyForce(double angle, double magnitude) {
+		double 
+			a = speedCurrent, b = magnitude,
+			innerAngle = Math.PI - angle + this.angle,
+			c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(innerAngle));
+			this.angle = Math.asin(b * Math.sin(innerAngle) / c) + this.angle;
+			speedCurrent = c;
+			if (speedCurrent > speed) {
+				speedCurrent = speed;
+			}
+			System.out.println(this.angle);
+	}
 	
 }
