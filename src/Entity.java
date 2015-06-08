@@ -130,4 +130,12 @@ public class Entity {
 		moveAccel = 0;
 	}
 
+	public void collideLeft(Entity e) {}
+	
+	public void collideRight(Entity e) {}
+	
+	public void collideTop(Entity e) {}
+	
+	public void collideBottom(Entity e) {}
+	
 }
