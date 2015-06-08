@@ -85,6 +85,10 @@ public class Entity {
 		bounds.setFrame(location.getX(), location.getY(), bounds.getWidth(),
 				bounds.getHeight());
 	}
+	
+	public void setLocation(double x, double y) {
+		move(x - location.getX(), y - location.getY());
+	}
 
 	public void resetGravity() {
 		gravityAccel = 0;
