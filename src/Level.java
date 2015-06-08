@@ -21,7 +21,7 @@ public class Level {
 		corner = new Point();
 		this.levelBounds = bounds;
 	}
-	
+
 	public Level(Rectangle2D bounds) {
 		entities = new LinkedList<>();
 		corner = new Point();
@@ -60,29 +60,27 @@ public class Level {
 								e.resetMovementAcceleration();
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(bounds1.getMaxX()
-											- bounds2.getMinX(),
-											bounds1.getCenterY());
+											- bounds2.getMinX(), 0.0);
 									e2.collideLeft(e);
 								}
 								// Collision on right side of player
 								else {
 									e.move(bounds1.getMinX()
-											- bounds2.getMaxX(),
-											bounds1.getCenterY());
+											- bounds2.getMaxX(), 0.0);
 									e2.collideRight(e);
 								}
 								// Collision on left side of player
 							} else if (vd < hd) {
 								e.resetGravity();
 								if (bounds1.getCenterY() < bounds2.getCenterY()) {
-									e.move(bounds1.getCenterX(),
+									e.move(0.0,
 											bounds1.getMaxY()
 													- bounds2.getMinY());
 									e2.collideTop(e);
 
 									// Collision on bottom side of player
 								} else {
-									e.move(bounds1.getCenterX(),
+									e.move(0.0,
 											bounds1.getMinY()
 													- bounds2.getMaxY());
 									e2.collideBottom(e);
@@ -101,16 +99,16 @@ public class Level {
 				double eY = ePos.getY();
 				if (eX > rightBound) {
 					e.resetMovementAcceleration();
-					e.move(leftBound + e.getBounds().getWidth() / 2, eY);
+					e.setLocation(leftBound + e.getBounds().getWidth() / 2, eY);
 				} else if (eX < leftBound) {
 					e.resetMovementAcceleration();
-					e.move(rightBound - e.getBounds().getWidth() / 2, eY);
+					e.setLocation(rightBound - e.getBounds().getWidth() / 2, eY);
 				} else if (eY > topBound) {
 					e.resetGravity();
-					e.move(eX, topBound + e.getBounds().getHeight() / 2);
+					e.setLocation(eX, topBound + e.getBounds().getHeight() / 2);
 				} else {
 					e.resetGravity();
-					e.move(eX, bottomBound - e.getBounds().getHeight() / 2);
+					e.setLocation(eX, bottomBound - e.getBounds().getHeight() / 2);
 				}
 			}
 		}
