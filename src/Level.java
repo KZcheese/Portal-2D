@@ -21,6 +21,12 @@ public class Level {
 		corner = new Point();
 		this.levelBounds = bounds;
 	}
+	
+	public Level(Rectangle2D bounds) {
+		entities = new LinkedList<>();
+		corner = new Point();
+		levelBounds = bounds;
+	}
 
 	public void update() {
 		for (Entity e : entities) {

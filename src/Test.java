@@ -26,7 +26,7 @@ public class Test {
 			}
 		}
 		
-		final Level l = new Level();
+		final Level l = new Level(new Rectangle2D.Double(0, 0, 600, 400));
 		final Renderer r = new Renderer(l);
 		
 		final Entity entity = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
@@ -40,11 +40,11 @@ public class Test {
 			public void actionPerformed(ActionEvent e) {
 				l.update();
 				r.repaint();
-				System.out.println("updating");
 				if (a[0] == 30) {
 					a[0] = 0;
-					entity.applyForce(Math.toRadians(-45), 2);
+//					entity.applyForce(Math.toRadians(-45), 2);
 				}
+				System.out.println(entity.getLocation());
 				a[0]++;
 			}
 		});

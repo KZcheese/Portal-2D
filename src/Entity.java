@@ -21,6 +21,7 @@ public class Entity {
 		location = new Point2D.Double();
 		speed = 100;
 		usePhysics = true;
+		move(100, 100);
 	}
 
 	public Entity() {
