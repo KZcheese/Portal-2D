@@ -30,16 +30,19 @@ public class Test {
 		final Renderer r = new Renderer(l);
 		
 		final Entity entity = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
-		entity.pushForward();
+		
+		final Controller c = new Controller(entity);
+		frame.addKeyListener(c);
 		
 		Entity wall = new Entity(new Rectangle2D.Double(200, 0, 0, 200));
-		l.addEntity(wall);
+//		l.addEntity(wall);
 		
 		final int[] a = {0};
 		Timer t = new Timer(16, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				l.update();
 				r.repaint();
+				c.update();
 				if (a[0] == 30) {
 					a[0] = 0;
 //					entity.applyForce(Math.toRadians(-45), 2);

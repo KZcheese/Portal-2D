@@ -113,7 +113,7 @@ public class Entity {
 	}
 
 	public void pushUp() {
-		gravityAccel += 3;
+		gravityAccel += 6;
 	}
 
 	public boolean physicsEnabled() {
