@@ -13,8 +13,8 @@ public class Entity {
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale, totalAngle;
 	
 	public static final double
-		GRAVITY = 0.01,
-		FRICTION = 0.005;
+		GRAVITY = 0.8,
+		FRICTION = 0.05;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
