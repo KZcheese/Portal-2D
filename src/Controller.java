@@ -22,11 +22,9 @@ public class Controller implements KeyListener {
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_A:
 			keysDown[LEFT] = true;
-			System.out.println("left press");
 			break;
 		case KeyEvent.VK_D:
 			keysDown[RIGHT] = true;
-			System.out.println("right press");
 			break;
 		case KeyEvent.VK_W:
 			keysDown[UP] = true;

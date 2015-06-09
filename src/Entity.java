@@ -14,12 +14,12 @@ public class Entity {
 	
 	public static final double
 		GRAVITY = 0.8,
-		FRICTION = 0.05;
+		FRICTION = 0.8;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double();
-		speed = 100;
+		speed = 6;
 		usePhysics = true;
 		move(100, 100);
 	}
@@ -154,7 +154,7 @@ public class Entity {
 			if (speedCurrent > speed) {
 				speedCurrent = speed;
 			}
-			System.out.println(this.angle);
+			System.out.println(speedCurrent);
 	}
 	
 }
