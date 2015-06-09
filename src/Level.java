@@ -2,7 +2,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -97,18 +96,18 @@ public class Level {
 				Point2D ePos = e.getLocation();
 				double eX = ePos.getX();
 				double eY = ePos.getY();
-				if (eX > rightBound) {
+				if (eX + e.getBounds().getWidth() > rightBound) {
 					e.resetMovementAcceleration();
-					e.setLocation(leftBound + e.getBounds().getWidth() / 2, eY);
+					e.setLocation(leftBound + e.getBounds().getWidth(), eY);
 				} else if (eX < leftBound) {
 					e.resetMovementAcceleration();
-					e.setLocation(rightBound - e.getBounds().getWidth() / 2, eY);
-				} else if (eY > topBound) {
+					e.setLocation(rightBound, eY);
+				} else if (eY < topBound) {
 					e.resetGravity();
-					e.setLocation(eX, topBound + e.getBounds().getHeight() / 2);
-				} else {
+					e.setLocation(eX, topBound);
+				} else if (eY + e.getBounds().getHeight() > bottomBound) {
 					e.resetGravity();
-					e.setLocation(eX, bottomBound - e.getBounds().getHeight() / 2);
+					e.setLocation(eX, bottomBound - e.getBounds().getHeight());
 				}
 			}
 		}
