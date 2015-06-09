@@ -13,6 +13,7 @@ public class Test {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Test");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		@SuppressWarnings("serial")
 		class Renderer extends JComponent {
 			public Level level;
 
@@ -25,18 +26,18 @@ public class Test {
 			}
 		}
 
-		final Level l = new Level(new Rectangle2D.Double(0, 0, 600, 200));
+		final Level l = new Level(new Rectangle2D.Double(0, 0, 310, 230));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Entity(new Rectangle2D.Double(0, 10, 20, 20));
+		final Entity entity = new Entity(new Rectangle2D.Double(10, 10, 20, 20));
 		// entity.pushForward();
-	
+
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
-		
-//		Entity wall = new Entity(new Rectangle2D.Double(200, 12, 100, 500));
-//		wall.enablePhysics(false);
-//		l.addEntity(wall);
+
+		 Entity wall = new Entity(new Rectangle2D.Double(200, 12, 100, 500));
+		 wall.enablePhysics(false);
+		 l.addEntity(wall);
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
@@ -46,14 +47,15 @@ public class Test {
 				c.update();
 				if (a[0] == 30) {
 					a[0] = 0;
-//					 entity.applyForce(Math.toRadians(-45), 2);
+					// entity.applyForce(Math.toRadians(-45), 2);
 				}
-//				System.out.println(entity.getLocation());
+				// System.out.println(entity.getLocation());
 				a[0]++;
 			}
 		});
 
-		r.setPreferredSize(new Dimension(600, 400));
+		frame.setPreferredSize(new Dimension(640, 480));
+		r.setPreferredSize(new Dimension(640, 480));
 		frame.getContentPane().add(r);
 
 		t.start();

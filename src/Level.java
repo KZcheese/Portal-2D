@@ -17,13 +17,13 @@ public class Level {
 
 	public Level(LinkedList<Entity> entities, Rectangle2D bounds) {
 		this.entities = entities;
-		corner = new Point();
+		corner = new Point((int) bounds.getMinX(), (int) bounds.getMinY());
 		this.levelBounds = bounds;
 	}
 
 	public Level(Rectangle2D bounds) {
 		entities = new LinkedList<>();
-		corner = new Point();
+		corner = new Point((int) bounds.getMinX(), (int) bounds.getMinY());
 		levelBounds = bounds;
 	}
 
@@ -55,23 +55,21 @@ public class Level {
 							// Now compare them to know the side of
 							// collision
 
-//							 if (hd < vd) {
-//							 e.resetMovementAcceleration();
-//							 if (bounds1.getCenterX() < bounds2.getCenterX())
-//							 {
-//							 e.move(bounds2.getMinX()
-//							 - bounds1.getMaxX(), 0.0);
-//							 e2.collideLeft(e);
-//							 }
-//							 // Collision on right side of player
-//							 else {
-//							 e.move(bounds1.getMinX()
-//							 - bounds2.getMaxX(), 0.0);
-//							 e2.collideRight(e);
-//							 }
-//							 // Collision on left side of player
-//							 } else
-							if (vd < hd) {
+							if (hd < vd) {
+								e.resetMovementAcceleration();
+								if (bounds1.getCenterX() < bounds2.getCenterX()) {
+									e.move(bounds2.getMinX()
+											- bounds1.getMaxX(), 0.0);
+									e2.collideLeft(e);
+								}
+								// Collision on right side of player
+								else {
+									e.move(bounds1.getMinX()
+											- bounds2.getMaxX(), 0.0);
+									e2.collideRight(e);
+								}
+								// Collision on left side of player
+							} else if (vd < hd) {
 								e.resetGravity();
 								if (bounds1.getCenterY() < bounds2.getCenterY()) {
 									e.move(0.0,
@@ -95,6 +93,7 @@ public class Level {
 				double topBound = levelBounds.getMinY();
 				double bottomBound = levelBounds.getMaxY();
 				Point2D ePos = e.getLocation();
+				System.out.println(ePos);
 				double eX = ePos.getX();
 				double eY = ePos.getY();
 				if (eX + e.getBounds().getWidth() > rightBound) {
@@ -103,7 +102,8 @@ public class Level {
 				} else if (eX < leftBound) {
 					e.resetMovementAcceleration();
 					e.setLocation(leftBound, eY);
-				} else if (eY < topBound) {
+				}
+				if (eY < topBound) {
 					e.resetGravity();
 					e.setLocation(eX, topBound);
 				} else if (eY + e.getBounds().getHeight() > bottomBound) {
