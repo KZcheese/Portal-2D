@@ -13,14 +13,13 @@ public class Entity {
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle,
 			timeScale, totalAngle;
 
-	public static final double GRAVITY = 0.5, FRICTION = 0.005;
+	public static final double GRAVITY = 0.05, FRICTION = 0.005;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
-		location = new Point2D.Double();
+		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
 		speed = 100;
 		usePhysics = true;
-		move(100, 100);
 	}
 
 	public Entity() {

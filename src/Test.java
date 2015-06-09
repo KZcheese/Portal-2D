@@ -28,10 +28,11 @@ public class Test {
 		final Level l = new Level(new Rectangle2D.Double(0, 0, 600, 200));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Entity(new Rectangle2D.Double(0, 0, 20, 20));
+		final Entity entity = new Entity(new Rectangle2D.Double(10, 10, 20, 20));
 		// entity.pushForward();
-
-		Entity wall = new Entity(new Rectangle2D.Double(200, 0, 0, 200));
+		
+		Entity wall = new Entity(new Rectangle2D.Double(200, 100, 100, 500));
+		wall.enablePhysics(false);
 		l.addEntity(wall);
 
 		final int[] a = { 0 };
@@ -41,7 +42,7 @@ public class Test {
 				r.repaint();
 				if (a[0] == 30) {
 					a[0] = 0;
-					// entity.applyForce(Math.toRadians(-45), 2);
+					 entity.applyForce(Math.toRadians(-45), 2);
 				}
 				System.out.println(entity.getLocation());
 				a[0]++;
