@@ -53,10 +53,10 @@ public class Controller implements KeyListener {
 			jumped = true;
 		}
 		if (keysDown[LEFT]) {
-			unit.applyForce(Math.PI, 1);
+			unit.moveAtAngle(Math.PI, 1);
 		}
 		if (keysDown[RIGHT]) {
-			unit.applyForce(0, 1);
+			unit.moveAtAngle(0, 1);
 		}
 	}
 }

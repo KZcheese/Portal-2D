@@ -26,7 +26,7 @@ public class Test {
 			}
 		}
 
-		final Level l = new Level(new Rectangle2D.Double(0, 0, 310, 230));
+		final Level l = new Level(new Rectangle2D.Double(0, 0, 640, 480));
 		final Renderer r = new Renderer(l);
 
 		final Entity entity = new Entity(new Rectangle2D.Double(10, 10, 20, 20));
@@ -35,9 +35,17 @@ public class Test {
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		 Entity wall = new Entity(new Rectangle2D.Double(200, 12, 100, 500));
-		 wall.enablePhysics(false);
-		 l.addEntity(wall);
+		Entity wall = new Entity(new Rectangle2D.Double(400, 200, 100, 500));
+		wall.enablePhysics(false);
+		l.addEntity(wall);
+		 
+		Entity wall2 = new Entity(new Rectangle2D.Double(0, 200, 100, 500));
+		wall2.enablePhysics(false);
+		l.addEntity(wall2);
+		 
+		Entity wall3 = new Entity(new Rectangle2D.Double(200, 200, 100, 500));
+		wall3.enablePhysics(false);
+		l.addEntity(wall3);
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
@@ -54,7 +62,7 @@ public class Test {
 			}
 		});
 
-		frame.setPreferredSize(new Dimension(640, 480));
+//		frame.setPreferredSize(new Dimension(640, 480));
 		r.setPreferredSize(new Dimension(640, 480));
 		frame.getContentPane().add(r);
 

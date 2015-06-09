@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -13,13 +14,13 @@ public class Entity {
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle, timeScale, totalAngle;
 	
 	public static final double
-		GRAVITY = 0.8,
-		FRICTION = 0.8;
+		GRAVITY = 0.4,
+		FRICTION = 0.6;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
-		location = new Point2D.Double();
-		speed = 6;
+		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
+		speed = 8;
 		usePhysics = true;
 		move(100, 100);
 	}
@@ -72,7 +73,6 @@ public class Entity {
 		if (speedCurrent < 0) {
 			speedCurrent = 0;
 		}
-		moveAccel -= FRICTION;
 		dx += Math.cos(angle) * speedCurrent;
 		dy += Math.sin(angle) * speedCurrent;
 
@@ -103,9 +103,7 @@ public class Entity {
 		Point corner = level.getCorner();
 		int dx = (int) (location.getX() - corner.x), dy = (int) (location
 				.getY() - corner.y);
-		g.translate(dx, dy);
-		((Graphics2D) g).fill(bounds);
-		g.translate(-dx, -dy);
+		g.fillRect(dx, dy, (int) bounds.getWidth(), (int) bounds.getHeight());
 	}
 
 	public void pushForward() {
@@ -113,7 +111,7 @@ public class Entity {
 	}
 
 	public void pushUp() {
-		gravityAccel += 6;
+		gravityAccel += 12;
 	}
 
 	public boolean physicsEnabled() {
@@ -149,12 +147,22 @@ public class Entity {
 			a = speedCurrent, b = magnitude,
 			innerAngle = Math.PI - angle + this.angle,
 			c = Math.sqrt(a * a + b * b - 2 * a * b * Math.cos(innerAngle));
-			this.angle = Math.asin(b * Math.sin(innerAngle) / c) + this.angle;
-			speedCurrent = c;
-			if (speedCurrent > speed) {
-				speedCurrent = speed;
-			}
-			System.out.println(speedCurrent);
+		this.angle = Math.asin(b * Math.sin(innerAngle) / c) + this.angle;
+		speedCurrent = c;
+		if (speedCurrent > speed) {
+			speedCurrent = speed;
+		}
+	}
+	
+	public void moveAtAngle(double angle, double speed) {
+		speedCurrent += speed;
+		if (speedCurrent > this.speed) {
+			speedCurrent = this.speed;
+		}
+		if (speedCurrent < 0) {
+			speedCurrent = 0;
+		}
+		this.angle = angle;
 	}
 	
 }
