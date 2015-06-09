@@ -28,10 +28,10 @@ public class Test {
 		final Level l = new Level(new Rectangle2D.Double(0, 0, 600, 200));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Entity(new Rectangle2D.Double(10, 10, 20, 20));
+		final Entity entity = new Entity(new Rectangle2D.Double(0, 10, 20, 20));
 		// entity.pushForward();
 		
-		Entity wall = new Entity(new Rectangle2D.Double(200, 100, 100, 500));
+		Entity wall = new Entity(new Rectangle2D.Double(200, 125, 100, 500));
 		wall.enablePhysics(false);
 		l.addEntity(wall);
 

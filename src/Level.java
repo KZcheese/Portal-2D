@@ -55,28 +55,29 @@ public class Level {
 							// Now compare them to know the side of
 							// collision
 
-							if (hd < vd) {
-								e.resetMovementAcceleration();
-								if (bounds1.getCenterX() < bounds2.getCenterX()) {
-									e.move(bounds1.getMaxX()
-											- bounds2.getMinX(), 0.0);
-									e2.collideLeft(e);
-								}
-								// Collision on right side of player
-								else {
-									e.move(bounds1.getMinX()
-											- bounds2.getMaxX(), 0.0);
-									e2.collideRight(e);
-								}
-								// Collision on left side of player
-							} else if (vd < hd) {
+//							 if (hd < vd) {
+//							 e.resetMovementAcceleration();
+//							 if (bounds1.getCenterX() < bounds2.getCenterX())
+//							 {
+//							 e.move(bounds2.getMinX()
+//							 - bounds1.getMaxX(), 0.0);
+//							 e2.collideLeft(e);
+//							 }
+//							 // Collision on right side of player
+//							 else {
+//							 e.move(bounds1.getMinX()
+//							 - bounds2.getMaxX(), 0.0);
+//							 e2.collideRight(e);
+//							 }
+//							 // Collision on left side of player
+//							 } else
+							if (vd < hd) {
 								e.resetGravity();
 								if (bounds1.getCenterY() < bounds2.getCenterY()) {
 									e.move(0.0,
-											bounds1.getMaxY()
-													- bounds2.getMinY());
+											bounds2.getMinY()
+													- bounds1.getMaxY());
 									e2.collideTop(e);
-
 									// Collision on bottom side of player
 								} else {
 									e.move(0.0,
@@ -98,10 +99,10 @@ public class Level {
 				double eY = ePos.getY();
 				if (eX + e.getBounds().getWidth() > rightBound) {
 					e.resetMovementAcceleration();
-					e.setLocation(leftBound + e.getBounds().getWidth(), eY);
+					e.setLocation(rightBound - e.getBounds().getWidth(), eY);
 				} else if (eX < leftBound) {
 					e.resetMovementAcceleration();
-					e.setLocation(rightBound, eY);
+					e.setLocation(leftBound, eY);
 				} else if (eY < topBound) {
 					e.resetGravity();
 					e.setLocation(eX, topBound);
