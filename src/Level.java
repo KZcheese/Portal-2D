@@ -93,6 +93,7 @@ public class Level {
 				double topBound = levelBounds.getMinY();
 				double bottomBound = levelBounds.getMaxY();
 				Point2D ePos = e.getLocation();
+				System.out.println(ePos);
 				double eX = ePos.getX();
 				double eY = ePos.getY();
 				if (eX + e.getBounds().getWidth() > rightBound) {

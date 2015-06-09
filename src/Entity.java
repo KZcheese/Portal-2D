@@ -155,7 +155,7 @@ public class Entity {
 		if (speedCurrent > speed) {
 			speedCurrent = speed;
 		}
-		System.out.println(this.angle);
+//		System.out.println(this.angle);
 	}
 
 }

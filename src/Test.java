@@ -13,6 +13,7 @@ public class Test {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Test");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		@SuppressWarnings("serial")
 		class Renderer extends JComponent {
 			public Level level;
 
@@ -34,9 +35,9 @@ public class Test {
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		// Entity wall = new Entity(new Rectangle2D.Double(200, 12, 100, 500));
-		// wall.enablePhysics(false);
-		// l.addEntity(wall);
+		 Entity wall = new Entity(new Rectangle2D.Double(200, 12, 100, 500));
+		 wall.enablePhysics(false);
+		 l.addEntity(wall);
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
