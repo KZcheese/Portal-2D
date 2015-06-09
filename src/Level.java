@@ -2,7 +2,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.geom.Rectangle2D.Double;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Level {
 		corner = new Point();
 		this.levelBounds = bounds;
 	}
-	
+
 	public Level(Rectangle2D bounds) {
 		entities = new LinkedList<>();
 		corner = new Point();
@@ -40,7 +39,7 @@ public class Level {
 						Rectangle2D bounds2 = e2.getBounds();
 						if (bounds1.intersects(bounds2)) {
 							// Calculate the vertical and horizontal
-							// length between the centres of rectangles
+							// length between the centers of rectangles
 
 							double hd = Math
 									.abs((bounds1.getCenterX() * bounds1
@@ -56,7 +55,6 @@ public class Level {
 							// Now compare them to know the side of
 							// collision
 
-<<<<<<< HEAD
 //							 if (hd < vd) {
 //							 e.resetMovementAcceleration();
 //							 if (bounds1.getCenterX() < bounds2.getCenterX())
@@ -79,34 +77,10 @@ public class Level {
 									e.move(0.0,
 											bounds2.getMinY()
 													- bounds1.getMaxY());
-=======
-							if (hd < vd) {
-								e.resetMovementAcceleration();
-								if (bounds1.getCenterX() < bounds2.getCenterX()) {
-									e.move(bounds1.getMaxX()
-											- bounds2.getMinX(),
-											bounds1.getCenterY());
-									e2.collideLeft(e);
-								}
-								// Collision on right side of player
-								else {
-									e.move(bounds1.getMinX()
-											- bounds2.getMaxX(),
-											bounds1.getCenterY());
-									e2.collideRight(e);
-								}
-								// Collision on left side of player
-							} else if (vd < hd) {
-								e.resetGravity();
-								if (bounds1.getCenterY() < bounds2.getCenterY()) {
-									e.move(bounds1.getCenterX(),
-											bounds1.getMaxY()
-													- bounds2.getMinY());
->>>>>>> origin/master
 									e2.collideTop(e);
 									// Collision on bottom side of player
 								} else {
-									e.move(bounds1.getCenterX(),
+									e.move(0.0,
 											bounds1.getMinY()
 													- bounds2.getMaxY());
 									e2.collideBottom(e);
@@ -123,26 +97,18 @@ public class Level {
 				Point2D ePos = e.getLocation();
 				double eX = ePos.getX();
 				double eY = ePos.getY();
-				if (eX > rightBound) {
+				if (eX + e.getBounds().getWidth() > rightBound) {
 					e.resetMovementAcceleration();
-<<<<<<< HEAD
 					e.setLocation(rightBound - e.getBounds().getWidth(), eY);
 				} else if (eX < leftBound) {
 					e.resetMovementAcceleration();
 					e.setLocation(leftBound, eY);
 				} else if (eY < topBound) {
-=======
-					e.move(leftBound + e.getBounds().getWidth() / 2, eY);
-				} else if (eX < leftBound) {
-					e.resetMovementAcceleration();
-					e.move(rightBound - e.getBounds().getWidth() / 2, eY);
-				} else if (eY > topBound) {
->>>>>>> origin/master
 					e.resetGravity();
-					e.move(eX, topBound + e.getBounds().getHeight() / 2);
-				} else {
+					e.setLocation(eX, topBound);
+				} else if (eY + e.getBounds().getHeight() > bottomBound) {
 					e.resetGravity();
-					e.move(eX, bottomBound - e.getBounds().getHeight() / 2);
+					e.setLocation(eX, bottomBound - e.getBounds().getHeight());
 				}
 			}
 		}
