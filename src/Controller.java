@@ -45,9 +45,8 @@ public class Controller implements KeyListener {
 	}
 
 	public void update() {
-		if (keysDown[UP] && !jumped) {
+		if (keysDown[UP]) {
 			unit.pushUp();
-			jumped = true;
 		}
 		if (keysDown[LEFT]) {
 			unit.moveAtAngle(Math.PI, 1);

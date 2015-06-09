@@ -7,19 +7,18 @@ public class Entity {
 	private Point2D location;
 	private Rectangle2D bounds;
 	private Level level;
-	private boolean usePhysics;
+	private boolean usePhysics, hasJumped;
 
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle,
 			timeScale, totalAngle;
 
-	public static final double GRAVITY = 0.4, FRICTION = 0.6;
+	public static final double GRAVITY = 0.6, FRICTION = 0.4;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
 		speed = 8;
 		usePhysics = true;
-		move(100, 100);
 	}
 
 	public Entity() {
@@ -108,7 +107,14 @@ public class Entity {
 	}
 
 	public void pushUp() {
-		gravityAccel += 10;
+		if (!hasJumped) {
+			gravityAccel += 15;
+			hasJumped = true;
+		}
+	}
+	
+	public void resetJump() {
+		hasJumped = false;
 	}
 
 	public boolean physicsEnabled() {

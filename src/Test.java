@@ -29,23 +29,27 @@ public class Test {
 		final Level l = new Level(new Rectangle2D.Double(0, 0, 640, 480));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Entity(new Rectangle2D.Double(25, 10, 20, 20));
+		final Entity entity = new Entity(new Rectangle2D.Double(25, 10, 20, 35));
 		// entity.pushForward();
 
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		Entity wall = new Entity(new Rectangle2D.Double(400, 100, 100, 1));
+		Entity wall = new Entity(new Rectangle2D.Double(200, 400, 100, 20));
 		wall.enablePhysics(false);
 		l.addEntity(wall);
 
-		Entity wall2 = new Entity(new Rectangle2D.Double(0, 100, 100, 1));
+		Entity wall2 = new Entity(new Rectangle2D.Double(0, 400, 100, 20));
 		wall2.enablePhysics(false);
 		l.addEntity(wall2);
 
-		Entity wall3 = new Entity(new Rectangle2D.Double(200, 100, 100, 1));
+		Entity wall3 = new Entity(new Rectangle2D.Double(100, 400, 20, 100));
 		wall3.enablePhysics(false);
 		l.addEntity(wall3);
+		
+		Entity wall4 = new Entity(new Rectangle2D.Double(300, 300, 20, 100));
+		wall4.enablePhysics(false);
+		l.addEntity(wall4);
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
@@ -53,10 +57,7 @@ public class Test {
 				l.update();
 				r.repaint();
 				c.update();
-				if (a[0] == 30) {
-					a[0] = 0;
-					// entity.applyForce(Math.toRadians(-45), 2);
-				}
+				wall3.pushUp();
 				// System.out.println(entity.getLocation());
 				a[0]++;
 			}

@@ -76,6 +76,7 @@ public class Level {
 															.getMaxY()
 															- bounds2.getMinY()));
 									e2.collideTop(e);
+									e.resetJump();
 									// Collision on bottom side of player
 								} else {
 									e.move(0.0,
@@ -109,6 +110,7 @@ public class Level {
 				} else if (eY + e.getBounds().getHeight() > bottomBound) {
 					e.resetGravity();
 					e.setLocation(eX, bottomBound - e.getBounds().getHeight());
+					e.resetJump();
 				}
 			}
 		}
