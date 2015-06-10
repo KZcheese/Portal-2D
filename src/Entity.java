@@ -14,7 +14,7 @@ public class Entity {
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle,
 			timeScale, totalAngle;
 
-	public static final double GRAVITY = 0.6, FRICTION = 0.6;
+	public static final double GRAVITY = 0.06, FRICTION = 0.6;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
@@ -184,6 +184,15 @@ public class Entity {
 			speedCurrent = 0;
 		}
 		setAngle(angle);
+	}
+	
+	public double getTotalAngle() {
+		double a = speedCurrent, b = gravityAccel, innerAngle = Math.PI - Math.PI / 2
+				+ this.angle, c = Math.sqrt(a * a + b * b - 2 * a * b
+				* Math.cos(innerAngle));
+		double angle = Math.asin(b * Math.sin(innerAngle) / c) + this.angle;
+		System.out.println(angle);
+		return Util.normalizeAngle(angle);
 	}
 
 }

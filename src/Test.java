@@ -35,11 +35,10 @@ public class Test {
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		l.addEntity(new Block(0, 11));
-		l.addEntity(new Block(2, 10));
-		l.addEntity(new Block(4, 9));
-		final Block b = new Block(4, 1);
-		l.addEntity(b);
+		l.addEntity(new Block(2, 9));
+		l.addEntity(new Block(2, 8));
+		l.addEntity(new Block(2, 7));
+		l.addEntity(new Block(2, 6));
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
@@ -47,7 +46,6 @@ public class Test {
 				l.update();
 				r.repaint();
 				c.update();
-				b.jump();
 				// System.out.println(entity.getLocation());
 				a[0]++;
 			}
