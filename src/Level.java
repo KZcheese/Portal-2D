@@ -45,10 +45,13 @@ public class Level {
 									- bounds2.getCenterX());
 							double vd = Math.abs(bounds1.getCenterY()
 									- bounds2.getCenterY());
-							System.out.println("1X: " + bounds1.getCenterX());
-							System.out.println("1Y:" + bounds1.getCenterY());
-							System.out.println("2X: " + bounds2.getCenterX());
-							System.out.println("2Y: " + bounds2.getCenterY());
+							// System.out.println("1X: " +
+							// bounds1.getCenterX());
+							// System.out.println("1Y:" + bounds1.getCenterY());
+							// System.out.println("2X: " +
+							// bounds2.getCenterX());
+							// System.out.println("2Y: " +
+							// bounds2.getCenterY());
 							// System.out.println("hd: " + hd);
 							// System.out.println("vd: " + vd);
 
@@ -58,7 +61,7 @@ public class Level {
 							// System.out.println("hd:" + bounds2.getWidth());
 							// System.out.println("vd:" + bounds2.getHeight());
 							if (hd / bounds2.getWidth() >= vd
-									/ bounds2.getHeight() - 0.2) {
+									/ bounds2.getHeight()) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
@@ -91,7 +94,7 @@ public class Level {
 															- bounds2.getMinY()));
 									e2.collideTop(e);
 									e.resetJump();
-									if (e.getVelY() < 0) {
+									if (e.getVelY() > 0) {
 										e.resetGravity();
 									}
 									// Collision on bottom side of player
@@ -100,7 +103,7 @@ public class Level {
 											Math.abs(bounds1.getMinY()
 													- bounds2.getMaxY()));
 									e2.collideBottom(e);
-									if (e.getVelY() > 0) {
+									if (e.getVelY() < 0) {
 										e.resetGravity();
 									}
 									// Collision on top side of player
@@ -134,11 +137,11 @@ public class Level {
 					}
 					e.setLocation(eX, topBound);
 				} else if (eY + e.getBounds().getHeight() > bottomBound) {
+					 System.out.println(e.getVelY());
 					if (e.getVelY() > 0) {
 						e.resetGravity();
 					}
 					e.setLocation(eX, bottomBound - e.getBounds().getHeight());
-					System.out.println("reset");
 					e.resetJump();
 				}
 			}

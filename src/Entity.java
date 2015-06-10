@@ -8,17 +8,17 @@ public class Entity {
 	private Point2D location;
 	private Rectangle2D bounds;
 	private Level level;
-	private boolean usePhysics, hasJumped;
+	private boolean usePhysics;
 	private int jumps;
 
-	private double gravityAccel, topSpeed, velX, timeScale, velY;
+	private double topSpeed, velX, timeScale, velY;
 
-	public static final double GRAVITY = 1.0, FRICTION = 0.8;
+	public static final double GRAVITY = 1.0, FRICTION = 0.9;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
-		topSpeed = 15;
+		topSpeed = 10;
 		velX = 0;
 		velY = 0;
 		usePhysics = true;
@@ -62,8 +62,7 @@ public class Entity {
 
 		// Gravity
 		if (usePhysics) {
-			velY -= gravityAccel;
-			gravityAccel -= GRAVITY;
+			velY += GRAVITY;
 		}
 
 		// Movement
@@ -90,7 +89,7 @@ public class Entity {
 	}
 
 	public void resetGravity() {
-		gravityAccel = 0;
+		velY = 0;
 	}
 
 	public void render(Graphics g) {
@@ -108,10 +107,10 @@ public class Entity {
 		if (jumps < 1) {
 			System.out.println(jumps);
 			System.out.println("JUMP");
-			gravityAccel += 10;
+			velY -= 20;
 			jumps++;
 		}
-//		System.out.println(jumps);
+		// System.out.println(jumps);
 	}
 
 	public void resetJump() {
@@ -145,6 +144,7 @@ public class Entity {
 	}
 
 	public void collideTop(Entity e) {
+		velX -= Math.signum(velX);
 	}
 
 	public void collideBottom(Entity e) {
@@ -169,5 +169,8 @@ public class Entity {
 	public void applyForce(double x, double y) {
 		velY += y;
 		velX += x;
+		if (topSpeed < Math.abs(velX)) {
+			velX = Math.signum(velX) * topSpeed;
+		}
 	}
 }
