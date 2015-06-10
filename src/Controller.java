@@ -14,27 +14,28 @@ public class Controller implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		int keyCode = e.getKeyCode();
-		if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
 			keysDown[LEFT] = true;
-		}
-		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+			break;
+		case KeyEvent.VK_D:
 			keysDown[RIGHT] = true;
-		}
-		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_SPACE) {
+			break;
+		case KeyEvent.VK_W:
 			keysDown[UP] = true;
 		}
 	}
 
 	public void keyReleased(KeyEvent e) {
-		int keyCode = e.getKeyCode();
-		if (keyCode == KeyEvent.VK_A || keyCode == KeyEvent.VK_LEFT) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_A:
 			keysDown[LEFT] = false;
-		}
-		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
+			break;
+		case KeyEvent.VK_D:
 			keysDown[RIGHT] = false;
-		}
-		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_SPACE) {
+			break;
+		case KeyEvent.VK_W:
 			keysDown[UP] = false;
 			jumped = false;
 		}

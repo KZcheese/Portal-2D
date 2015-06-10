@@ -39,10 +39,6 @@ public class Test {
 		l.addEntity(new Block(2, 8));
 		l.addEntity(new Block(2, 7));
 		l.addEntity(new Block(2, 6));
-		
-		for (int i = 0; i < 16; i++) {
-			l.addEntity(new Block(i, 11));
-		}
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
