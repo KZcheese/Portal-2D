@@ -35,21 +35,34 @@ public class Test {
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		Entity wall1 = new Entity(new Rectangle2D.Double(0, 460, 100, 20));
+		Entity wall1 = new Entity(new Rectangle2D.Double(0, 460, 100, 2));
 		wall1.enablePhysics(false);
 		l.addEntity(wall1);
 		
-		Entity wall2 = new Entity(new Rectangle2D.Double(100, 380, 100, 20));
+		Entity wall2 = new Entity(new Rectangle2D.Double(80, 380, 100, 2));
 		wall2.enablePhysics(false);
 		l.addEntity(wall2);
 		
-		Entity wall3 = new Entity(new Rectangle2D.Double(200, 300, 100, 20));
+		Entity wall3 = new Entity(new Rectangle2D.Double(160, 300, 100, 2));
 		wall3.enablePhysics(false);
 		l.addEntity(wall3);
 		
-		Entity wall4 = new Entity(new Rectangle2D.Double(300, 220, 100, 20));
+		Entity wall4 = new Entity(new Rectangle2D.Double(240, 220, 100, 2));
 		wall4.enablePhysics(false);
 		l.addEntity(wall4);
+		
+		Entity wall5 = new Entity(new Rectangle2D.Double(80, 380, 2, 100));
+		wall5.enablePhysics(false);
+//		l.addEntity(wall5);
+		
+		Entity wall6 = new Entity(new Rectangle2D.Double(160, 300, 2, 100));
+		wall6.enablePhysics(false);
+		l.addEntity(wall6);
+		
+		Entity wall7 = new Entity(new Rectangle2D.Double(240, 220, 2, 100));
+		wall7.enablePhysics(false);
+		l.addEntity(wall7);
+	
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {

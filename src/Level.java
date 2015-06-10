@@ -60,6 +60,8 @@ public class Level {
 									e2.collideLeft(e);
 									if (Math.abs(e.getAngle()) < Math.PI / 2) {
 										e.resetMovementAcceleration();
+									} else {
+										// Fell off
 									}
 								}
 								// Collision on right side of player
@@ -69,6 +71,8 @@ public class Level {
 									e2.collideRight(e);
 									if (Math.abs(e.getAngle()) >= Math.PI / 2) {
 										e.resetMovementAcceleration();
+									} else {
+										// Fell off
 									}
 								}
 								// Collision on left side of player
