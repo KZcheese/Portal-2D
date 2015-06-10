@@ -11,15 +11,16 @@ public class Entity {
 	private boolean usePhysics, hasJumped;
 	private int jumps;
 
-	private double moveAccel, gravityAccel, speed, speedCurrent, angle,
-			timeScale, totalAngle;
+	private double gravityAccel, topSpeed, velX, timeScale, velY;
 
 	public static final double GRAVITY = 1.0, FRICTION = 0.8;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
-		speed = 15;
+		topSpeed = 15;
+		velX = 0;
+		velY = 0;
 		usePhysics = true;
 	}
 
@@ -57,33 +58,25 @@ public class Entity {
 		updateLocation();
 	}
 
-	public double getAngle() {
-		return angle;
-	}
-
-	public void setAngle(double angle) {
-		this.angle = (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-	}
-
 	public void updateLocation() {
-		double dx = 0, dy = 0;
 
 		// Gravity
 		if (usePhysics) {
-			dy -= gravityAccel;
+			velY -= gravityAccel;
 			gravityAccel -= GRAVITY;
 		}
 
 		// Movement
-		speedCurrent -= FRICTION;
-		if (speedCurrent < 0) {
-			speedCurrent = 0;
+		if (velX > 0) {
+			velX -= FRICTION;
+			if (velX < 0)
+				velX = 0;
+		} else {
+			velX += FRICTION;
+			if (velX > 0)
+				velX = 0;
 		}
-		dx += Math.cos(angle) * speedCurrent;
-		dy += Math.sin(angle) * speedCurrent;
-
-		move(dx, dy);
-		totalAngle = Math.atan2(dy, dx);
+		move(velX, velY);
 	}
 
 	public void move(double dx, double dy) {
@@ -100,11 +93,6 @@ public class Entity {
 		gravityAccel = 0;
 	}
 
-	public static void movePoint(Point2D p, double dist, double angle) {
-		double dx = Math.cos(angle) * dist, dy = Math.sin(angle) * dist;
-		p.setLocation(p.getX() + dx, p.getY() + dy);
-	}
-
 	public void render(Graphics g) {
 		Point corner = getLevel().getCorner();
 		int dx = (int) (location.getX() - corner.x), dy = (int) (location
@@ -116,15 +104,14 @@ public class Entity {
 		g.drawRect(dx, dy, w, h);
 	}
 
-	public void pushForward() {
-		speedCurrent += 2;
-	}
-
 	public void jump() {
 		if (jumps < 1) {
-			gravityAccel += 22.5;
+			System.out.println(jumps);
+			System.out.println("JUMP");
+			gravityAccel += 10;
 			jumps++;
 		}
+//		System.out.println(jumps);
 	}
 
 	public void resetJump() {
@@ -148,7 +135,7 @@ public class Entity {
 	}
 
 	public void resetMovementAcceleration() {
-		speedCurrent = 0;
+		velX = 0;
 	}
 
 	public void collideLeft(Entity e) {
@@ -163,48 +150,24 @@ public class Entity {
 	public void collideBottom(Entity e) {
 	}
 
-	public void applyForce(double angle, double magnitude) {
-		double a = speedCurrent, b = magnitude, innerAngle = Math.PI - angle
-				+ this.angle, c = Math.sqrt(a * a + b * b - 2 * a * b
-				* Math.cos(Math.abs(this.angle - innerAngle)));
-
-		double otherInnerAngle = Math.asin(c
-				* Math.sin(Math.abs(angle - innerAngle)));
-		if (Math.abs(angle) > Math.PI)
-			setAngle(this.angle - otherInnerAngle);
-		else
-			setAngle(this.angle + otherInnerAngle);
-		speedCurrent = c;
-		if (speedCurrent > speed) {
-			speedCurrent = speed;
-		}
-	}
-
-	public void moveAtAngle(double angle, double speed) {
-		speedCurrent += speed;
-		if (speedCurrent > this.speed) {
-			speedCurrent = this.speed;
-		}
-		if (speedCurrent < 0) {
-			speedCurrent = 0;
-		}
-		setAngle(angle);
-	}
-
-	public double getTotalAngle() {
-		double a = speedCurrent, b = gravityAccel, innerAngle = Math.PI
-				- Math.PI / 2 + this.angle, c = Math.sqrt(a * a + b * b - 2 * a
-				* b * Math.cos(innerAngle));
-		double angle = Math.asin(b * Math.sin(innerAngle) / c) + this.angle;
-		// System.out.println(angle);
-		return Util.normalizeAngle(angle);
-	}
-
-	public void kill(){
+	public void kill() {
 		level.removeEntity(this);
 	}
+
+	public double getVelX() {
+		return velX;
+	}
+
+	public double getVelY() {
+		return velY;
+	}
+
 	public Level getLevel() {
 		return level;
 	}
 
+	public void applyForce(double x, double y) {
+		velY += y;
+		velX += x;
+	}
 }

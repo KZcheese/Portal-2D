@@ -64,7 +64,7 @@ public class Level {
 											* Math.abs(bounds1.getMaxX()
 													- bounds2.getMinX()), 0.0);
 									e2.collideLeft(e);
-									if (Math.abs(e.getAngle()) < Math.PI / 2) {
+									if (e.getVelX() > 0) {
 										e.resetMovementAcceleration();
 									} else {
 										// Fell off
@@ -75,7 +75,7 @@ public class Level {
 									e.move(Math.abs(bounds1.getMinX()
 											- bounds2.getMaxX()), 0.0);
 									e2.collideRight(e);
-									if (Math.abs(e.getAngle()) >= Math.PI / 2) {
+									if (e.getVelX() < 0) {
 										e.resetMovementAcceleration();
 									} else {
 										// Fell off
@@ -91,7 +91,7 @@ public class Level {
 															- bounds2.getMinY()));
 									e2.collideTop(e);
 									e.resetJump();
-									if (Math.abs(e.getTotalAngle()) > Math.PI) {
+									if (e.getVelY() < 0) {
 										e.resetGravity();
 									}
 									// Collision on bottom side of player
@@ -100,7 +100,7 @@ public class Level {
 											Math.abs(bounds1.getMinY()
 													- bounds2.getMaxY()));
 									e2.collideBottom(e);
-									if (Math.abs(e.getTotalAngle()) < Math.PI) {
+									if (e.getVelY() > 0) {
 										e.resetGravity();
 									}
 									// Collision on top side of player
@@ -118,18 +118,27 @@ public class Level {
 				double eX = ePos.getX();
 				double eY = ePos.getY();
 				if (eX + e.getBounds().getWidth() > rightBound) {
-					e.resetMovementAcceleration();
+					if (e.getVelX() > 0) {
+						e.resetMovementAcceleration();
+					}
 					e.setLocation(rightBound - e.getBounds().getWidth(), eY);
 				} else if (eX < leftBound) {
-					e.resetMovementAcceleration();
+					if (e.getVelX() < 0) {
+						e.resetMovementAcceleration();
+					}
 					e.setLocation(leftBound, eY);
 				}
 				if (eY < topBound) {
-					e.resetGravity();
+					if (e.getVelY() < 0) {
+						e.resetGravity();
+					}
 					e.setLocation(eX, topBound);
 				} else if (eY + e.getBounds().getHeight() > bottomBound) {
-					e.resetGravity();
+					if (e.getVelY() > 0) {
+						e.resetGravity();
+					}
 					e.setLocation(eX, bottomBound - e.getBounds().getHeight());
+					System.out.println("reset");
 					e.resetJump();
 				}
 			}

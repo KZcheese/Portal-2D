@@ -21,7 +21,8 @@ public class Controller implements KeyListener {
 		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
 			keysDown[RIGHT] = true;
 		}
-		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_SPACE) {
+		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP
+				|| keyCode == KeyEvent.VK_SPACE) {
 			keysDown[UP] = true;
 		}
 	}
@@ -34,7 +35,8 @@ public class Controller implements KeyListener {
 		if (keyCode == KeyEvent.VK_D || keyCode == KeyEvent.VK_RIGHT) {
 			keysDown[RIGHT] = false;
 		}
-		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_SPACE) {
+		if (keyCode == KeyEvent.VK_W || keyCode == KeyEvent.VK_UP
+				|| keyCode == KeyEvent.VK_SPACE) {
 			keysDown[UP] = false;
 			jumped = false;
 		}
@@ -48,10 +50,10 @@ public class Controller implements KeyListener {
 			unit.jump();
 		}
 		if (keysDown[LEFT]) {
-			unit.applyForce(Math.PI, 1.5);
+			unit.applyForce(-1.5, 0);
 		}
 		if (keysDown[RIGHT]) {
-			unit.applyForce(0, 1.5);
+			unit.applyForce(1.5, 0);
 		}
 	}
 }
