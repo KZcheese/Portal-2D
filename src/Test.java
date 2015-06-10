@@ -29,16 +29,18 @@ public class Test {
 		final Level l = new Level(new Rectangle2D.Double(0, 0, 16 * Block.SIZE, 12 * Block.SIZE));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Entity(new Rectangle2D.Double(25, 10, 20, 35));
+		final Entity entity = new Unit(new Rectangle2D.Double(25, 10, 20, 35));
 		// entity.pushForward();
 
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		l.addEntity(new Block(2, 9));
-		l.addEntity(new Block(2, 8));
-		l.addEntity(new Block(2, 7));
-		l.addEntity(new Block(2, 6));
+		l.addEntity(new SolidBlock(2, 9));
+		l.addEntity(new SolidBlock(2, 8));
+		l.addEntity(new SolidBlock(2, 7));
+		l.addEntity(new SolidBlock(2, 6));
+		
+		l.addEntity(new Spike(4, 11));
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {
