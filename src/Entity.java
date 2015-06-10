@@ -144,7 +144,7 @@ public class Entity {
 	}
 
 	public void collideTop(Entity e) {
-		velX -= Math.signum(velX);
+		velX -= Math.signum(velX)*5;
 	}
 
 	public void collideBottom(Entity e) {
