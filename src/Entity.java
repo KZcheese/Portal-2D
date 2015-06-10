@@ -200,10 +200,9 @@ public class Entity {
 		return Util.normalizeAngle(angle);
 	}
 
-	public void kill() {
+	public void kill(){
 		level.removeEntity(this);
 	}
-
 	public Level getLevel() {
 		return level;
 	}
