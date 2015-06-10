@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 public class SpriteSheet {
 	public static class Animation {
 		private int start, stop, current;
+		private boolean repeat;
 		
 		/**
 		 * Constructs an animation with a specified start and stop
@@ -12,7 +13,7 @@ public class SpriteSheet {
 		 * @param start The first frame of the animation
 		 * @param stop The last frame of the animation
 		 */
-		public Animation(int start, int stop) {
+		public Animation(int start, int stop, boolean repeat) {
 			this.start = start;
 			this.stop = stop;
 			current = start;
@@ -40,6 +41,8 @@ public class SpriteSheet {
 		public void update() {
 			if (!isDone()) {
 				current++;
+			} else if (repeat) {
+				current = start;
 			}
 		}
 	}
@@ -52,9 +55,13 @@ public class SpriteSheet {
 		this.image = image;
 		this.width = width;
 		this.height = height;
+		System.out.println(image);
 	}
 	
 	public Image getCurrentFrame() {
+		if (image == null) {
+			return image;
+		}
 		int rows = image.getWidth() / width,
 			cols = image.getHeight() / height,
 			row = currentAnimation.getCurrent() % rows,
@@ -64,6 +71,10 @@ public class SpriteSheet {
 	
 	public void update() {
 		currentAnimation.update();
+	}
+	
+	public void playAnimation(Animation anim) {
+		currentAnimation = anim;
 	}
 	
 }

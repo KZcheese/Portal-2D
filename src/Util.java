@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,10 +8,12 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 
-public class Util {
-	private static Map<String, Image> images = new HashMap<>();
+public final class Util {
+	private static Map<String, BufferedImage> images = new HashMap<>();
 	
 	public static final double TWO_PI = 2 * Math.PI;
+	
+	private Util() {}
 	
 	/**
 	 * Returns the specified angle as a value in the interval
@@ -30,11 +33,11 @@ public class Util {
 	 * @param path The path of the image
 	 * @return The image at the specified path
 	 */
-	public Image readImage(String path) {
-		Image image = null;
+	public static BufferedImage readImage(String path) {
+		BufferedImage image = null;
 		path = "resources/" + path;
 		if (images.containsKey(path)) {
-			image = images.get(image);
+			image = images.get(path);
 		} else {
 			try {
 				image = ImageIO.read(new File(path));
@@ -43,6 +46,7 @@ public class Util {
 				e.printStackTrace();
 			}
 		}
+		System.out.println(image);
 		return image;
 	}
 }
