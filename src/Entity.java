@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -8,11 +9,12 @@ public class Entity {
 	private Rectangle2D bounds;
 	private Level level;
 	private boolean usePhysics, hasJumped;
+	private int jumps;
 
 	private double moveAccel, gravityAccel, speed, speedCurrent, angle,
 			timeScale, totalAngle;
 
-	public static final double GRAVITY = 0.6, FRICTION = 0.4;
+	public static final double GRAVITY = 0.6, FRICTION = 0.6;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
@@ -53,6 +55,14 @@ public class Entity {
 
 	public void update() {
 		updateLocation();
+	}
+	
+	public double getAngle() {
+		return angle;
+	}
+	
+	public void setAngle(double angle) {
+		this.angle = (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
 	}
 
 	public void updateLocation() {
@@ -98,23 +108,28 @@ public class Entity {
 	public void render(Graphics g) {
 		Point corner = level.getCorner();
 		int dx = (int) (location.getX() - corner.x), dy = (int) (location
-				.getY() - corner.y);
-		g.fillRect(dx, dy, (int) bounds.getWidth(), (int) bounds.getHeight());
+				.getY() - corner.y),
+			w = (int) bounds.getWidth(),
+			h = (int) bounds.getHeight();
+		g.setColor(new Color(35, 35, 35));
+		g.fillRect(dx, dy, w, h);
+		g.setColor(new Color(0, 0, 0));
+		g.drawRect(dx, dy, w, h);
 	}
 
 	public void pushForward() {
 		speedCurrent += 2;
 	}
 
-	public void pushUp() {
-		if (!hasJumped) {
-			gravityAccel += 15;
-			hasJumped = true;
+	public void jump() {
+		if (jumps < 1) {
+			gravityAccel += 12.5;
+			jumps++;
 		}
 	}
 	
 	public void resetJump() {
-		hasJumped = false;
+		jumps = 0;
 	}
 
 	public boolean physicsEnabled() {
@@ -153,7 +168,7 @@ public class Entity {
 		double a = speedCurrent, b = magnitude, innerAngle = Math.PI - angle
 				+ this.angle, c = Math.sqrt(a * a + b * b - 2 * a * b
 				* Math.cos(innerAngle));
-		this.angle = Math.asin(b * Math.sin(innerAngle) / c) + this.angle;
+		setAngle(Math.asin(b * Math.sin(innerAngle) / c) + this.angle);
 		speedCurrent = c;
 		if (speedCurrent > speed) {
 			speedCurrent = speed;
@@ -168,7 +183,7 @@ public class Entity {
 		if (speedCurrent < 0) {
 			speedCurrent = 0;
 		}
-		this.angle = angle;
+		setAngle(angle);
 	}
 
 }

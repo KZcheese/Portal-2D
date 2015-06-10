@@ -53,18 +53,23 @@ public class Level {
 
 							if (hd / bounds2.getWidth() > vd
 									/ bounds2.getHeight()) {
-								e.resetMovementAcceleration();
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
 													- bounds2.getMinX()), 0.0);
 									e2.collideLeft(e);
+									if (Math.abs(e.getAngle()) < Math.PI / 2) {
+										e.resetMovementAcceleration();
+									}
 								}
 								// Collision on right side of player
 								else {
 									e.move(Math.abs(bounds1.getMinX()
 											- bounds2.getMaxX()), 0.0);
 									e2.collideRight(e);
+									if (Math.abs(e.getAngle()) >= Math.PI / 2) {
+										e.resetMovementAcceleration();
+									}
 								}
 								// Collision on left side of player
 							} else {

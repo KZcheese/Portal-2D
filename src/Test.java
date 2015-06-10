@@ -35,19 +35,19 @@ public class Test {
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		Entity wall = new Entity(new Rectangle2D.Double(200, 400, 100, 20));
-		wall.enablePhysics(false);
-		l.addEntity(wall);
-
-		Entity wall2 = new Entity(new Rectangle2D.Double(0, 400, 100, 20));
+		Entity wall1 = new Entity(new Rectangle2D.Double(0, 460, 100, 20));
+		wall1.enablePhysics(false);
+		l.addEntity(wall1);
+		
+		Entity wall2 = new Entity(new Rectangle2D.Double(100, 380, 100, 20));
 		wall2.enablePhysics(false);
 		l.addEntity(wall2);
-
-		Entity wall3 = new Entity(new Rectangle2D.Double(100, 400, 20, 100));
+		
+		Entity wall3 = new Entity(new Rectangle2D.Double(200, 300, 100, 20));
 		wall3.enablePhysics(false);
 		l.addEntity(wall3);
 		
-		Entity wall4 = new Entity(new Rectangle2D.Double(300, 300, 20, 100));
+		Entity wall4 = new Entity(new Rectangle2D.Double(300, 220, 100, 20));
 		wall4.enablePhysics(false);
 		l.addEntity(wall4);
 
@@ -57,7 +57,7 @@ public class Test {
 				l.update();
 				r.repaint();
 				c.update();
-				wall3.pushUp();
+				wall3.jump();
 				// System.out.println(entity.getLocation());
 				a[0]++;
 			}
