@@ -9,8 +9,8 @@ public class SolidBlock extends Block {
 	}
 	
 	public void render(Graphics g) {
-		Point corner = level.getCorner();
-		int dx = (int) (getLocation().getX() - corner.x), dy = (int) (location
+		Point corner = getLevel().getCorner();
+		int dx = (int) (getLocation().getX() - corner.x), dy = (int) (getLocation()
 				.getY() - corner.y),
 			w = (int) getBounds().getWidth(),
 			h = (int) getBounds().getHeight();
