@@ -45,14 +45,20 @@ public class Level {
 									- bounds2.getCenterX());
 							double vd = Math.abs(bounds1.getCenterY()
 									- bounds2.getCenterY());
-//							System.out.println("hd: " + hd);
-//							System.out.println("vd: " + vd);
+							System.out.println("1X: " + bounds1.getCenterX());
+							System.out.println("1Y:" + bounds1.getCenterY());
+							System.out.println("2X: " + bounds2.getCenterX());
+							System.out.println("2Y: " + bounds2.getCenterY());
+							// System.out.println("hd: " + hd);
+							// System.out.println("vd: " + vd);
 
 							// Now compare them to know the side of
 							// collision
 
+							// System.out.println("hd:" + bounds2.getWidth());
+							// System.out.println("vd:" + bounds2.getHeight());
 							if (hd / bounds2.getWidth() >= vd
-									/ bounds2.getHeight()) {
+									/ bounds2.getHeight() - 0.2) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
@@ -94,7 +100,7 @@ public class Level {
 											Math.abs(bounds1.getMinY()
 													- bounds2.getMaxY()));
 									e2.collideBottom(e);
-									if (Math.abs(e.getTotalAngle()) <= Math.PI) {
+									if (Math.abs(e.getTotalAngle()) < Math.PI) {
 										e.resetGravity();
 									}
 									// Collision on top side of player
