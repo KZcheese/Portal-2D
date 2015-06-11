@@ -21,4 +21,8 @@ public class Renderer extends JComponent {
 //		Image scaled = canvas.getScaledInstance((int) (canvas.getWidth() * scaleFactor), (int) (canvas.getHeight() * scaleFactor), BufferedImage.SCALE_FAST);
 		g.drawImage(canvas, 0, 0, this);
 	}
+	
+	public void setLevel(Level level) {
+		this.level = level;
+	}
 }
