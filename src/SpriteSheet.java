@@ -17,6 +17,7 @@ public class SpriteSheet {
 			this.start = start;
 			this.stop = stop;
 			current = start;
+			this.repeat = repeat;
 		}
 		
 		/**
@@ -39,10 +40,16 @@ public class SpriteSheet {
 		 * Increments the current frame if the animation is not complete.
 		 */
 		public void update() {
-			if (!isDone()) {
+			if (true) {
 				current++;
-			} else if (repeat) {
-				current = start;
+				if (current > stop) {
+					System.out.println(repeat);
+					if (repeat) {
+						current = start;
+					} else {
+						current--;
+					}
+				}
 			}
 		}
 	}
@@ -55,18 +62,14 @@ public class SpriteSheet {
 		this.image = image;
 		this.width = width;
 		this.height = height;
-		System.out.println(image);
 	}
 	
 	public Image getCurrentFrame() {
 		if (image == null) {
 			return image;
 		}
-		int rows = image.getWidth() / width,
-			cols = image.getHeight() / height,
-			row = currentAnimation.getCurrent() % rows,
-			col = currentAnimation.getCurrent() / cols;
-		return image.getSubimage(row * width, col * height, width, height);
+		int frame = currentAnimation.current;
+		return image.getSubimage(getCol(frame) * width, getRow(frame) * height, width, height);
 	}
 	
 	public void update() {
@@ -75,6 +78,33 @@ public class SpriteSheet {
 	
 	public void playAnimation(Animation anim) {
 		currentAnimation = anim;
+	}
+	
+	private int getCols() {
+		return image.getWidth() / width;
+	}
+	
+	private int getRows() {
+		return image.getHeight() / height;
+	}
+	
+	private int getCol(int frame) {
+		return frame % getCols();
+	}
+	
+	private int getRow(int frame) {
+		return frame / getCols();
+	}
+	
+	public static void main(String[] args) {
+		SpriteSheet s = new SpriteSheet(Util.readImage("sprite_test.png"), 48, 64, 8);
+		int f = 2;
+		System.out.println(s.getRow(f) * s.width + " " + s.getCol(f) * s.height + " " + s.width + " " + s.height);
+		
+	}
+	
+	public void cueAnimation(Animation anim) {
+		
 	}
 	
 }

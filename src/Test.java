@@ -30,7 +30,7 @@ public class Test {
 				12 * Block.SIZE));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Unit(new Rectangle2D.Double(25, 10, 20, 20));
+		final Entity entity = new Unit(new Rectangle2D.Double(25, 10, 48, 64));
 		// entity.pushForward();
 
 		final Controller c = new Controller(entity);

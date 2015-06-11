@@ -14,7 +14,7 @@ public class Entity {
 
 	private double topSpeed, velX, timeScale, velY;
 
-	public static final double GRAVITY = 1.0, FRICTION = 0.1;
+	public static final double GRAVITY = 1.0, FRICTION = 0.3;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
@@ -75,6 +75,9 @@ public class Entity {
 
 	public void update() {
 		updateLocation();
+		if (sprite != null) {
+			sprite.update();
+		}
 	}
 
 	public void updateLocation() {
