@@ -12,4 +12,9 @@ public class Block extends Entity {
 	public Block() {
 		this(0, 0);
 	}
+	
+	public void moveAbove(Entity e) {
+		Rectangle2D bounds1 = getBounds(), bounds2 = e.getBounds();
+		e.setLocation(bounds1.getMinX(), bounds1.getMinY() - bounds2.getHeight());
+	}
 }
