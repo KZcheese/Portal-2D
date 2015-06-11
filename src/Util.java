@@ -46,7 +46,6 @@ public final class Util {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(image);
 		return image;
 	}
 }

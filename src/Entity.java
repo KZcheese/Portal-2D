@@ -10,10 +10,11 @@ public class Entity {
 	private Level level;
 	private boolean usePhysics;
 	private int jumps;
+	private SpriteSheet sprite;
 
 	private double topSpeed, velX, timeScale, velY;
 
-	public static final double GRAVITY = 1.0, FRICTION = 0.9;
+	public static final double GRAVITY = 1.0, FRICTION = 0.1;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
@@ -23,7 +24,25 @@ public class Entity {
 		velY = 0;
 		usePhysics = true;
 	}
+	
+	public Entity(Rectangle2D bounds, SpriteSheet sprite) {
+		this.bounds = bounds;
+		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
+		topSpeed = 10;
+		velX = 0;
+		velY = 0;
+		usePhysics = true;
+		this.sprite = sprite;
+	}
 
+	public SpriteSheet getSprite() {
+		return sprite;
+	}
+	
+	public void setSprite(SpriteSheet sprite) {
+		this.sprite = sprite;
+	}
+	
 	public Entity() {
 		this(null);
 	}
@@ -97,16 +116,18 @@ public class Entity {
 		int dx = (int) (location.getX() - corner.x), dy = (int) (location
 				.getY() - corner.y), w = (int) bounds.getWidth(), h = (int) bounds
 				.getHeight();
-		g.setColor(new Color(35, 35, 35));
-		g.fillRect(dx, dy, w, h);
-		g.setColor(new Color(0, 0, 0));
-		g.drawRect(dx, dy, w, h);
+		if (sprite == null) {
+			g.setColor(new Color(35, 35, 35));
+			g.fillRect(dx, dy, w, h);
+			g.setColor(new Color(0, 0, 0));
+			g.drawRect(dx, dy, w, h);
+		} else {
+			g.drawImage(sprite.getCurrentFrame(), dx, dy, null);
+		}
 	}
 
 	public void jump() {
 		if (jumps < 1) {
-			System.out.println(jumps);
-			System.out.println("JUMP");
 			velY -= 20;
 			jumps++;
 		}
@@ -144,7 +165,13 @@ public class Entity {
 	}
 
 	public void collideTop(Entity e) {
-		velX -= Math.signum(velX)*5;
+		double signum = Math.signum(e.velX);
+		double friction = signum * 1;
+		e.velX -= friction;
+		if (Math.signum(e.velX) != signum) {
+			e.velX = 0;
+		}
+		
 	}
 
 	public void collideBottom(Entity e) {
@@ -172,5 +199,9 @@ public class Entity {
 		if (topSpeed < Math.abs(velX)) {
 			velX = Math.signum(velX) * topSpeed;
 		}
+	}
+	
+	public double getAngle() {
+		return Util.normalizeAngle(Math.atan2(velY, velX));
 	}
 }
