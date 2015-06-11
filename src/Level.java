@@ -15,9 +15,9 @@ public class Level {
 	private Point corner;
 	private Rectangle2D levelBounds;
 	public static final double BORDER_WIDTH = 100;
-	
+
 	private Queue<Entity> addQueue, removeQueue;
-	
+
 	private BufferedImage backgroundTile;
 	private Paint texture;
 
@@ -35,9 +35,10 @@ public class Level {
 
 	public void setBackground(BufferedImage background) {
 		backgroundTile = background;
-		texture = new TexturePaint(backgroundTile, new Rectangle2D.Double(0, 0, background.getWidth(), background.getHeight()));
+		texture = new TexturePaint(backgroundTile, new Rectangle2D.Double(0, 0,
+				background.getWidth(), background.getHeight()));
 	}
-	
+
 	public void update() {
 		Entity entity;
 		while (!addQueue.isEmpty()) {
@@ -50,7 +51,7 @@ public class Level {
 			entity.setLevel(null);
 			entities.remove(entity);
 		}
-		
+
 		for (Entity e : entities) {
 			e.updateEntity();
 			e.setGrounded(false);
@@ -82,8 +83,9 @@ public class Level {
 
 							// System.out.println("hd:" + bounds2.getWidth());
 							// System.out.println("vd:" + bounds2.getHeight());
-							if (hd / bounds2.getWidth() >= vd
-									/ bounds2.getHeight()) {
+							if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
+									/ (bounds2.getHeight() * bounds1
+											.getHeight())) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
@@ -159,7 +161,7 @@ public class Level {
 					}
 					e.setLocation(eX, topBound);
 				} else if (eY + e.getBounds().getHeight() > bottomBound) {
-					 System.out.println(e.getVelY());
+					System.out.println(e.getVelY());
 					if (e.getVelY() > 0) {
 						e.resetGravity();
 					}
@@ -200,11 +202,11 @@ public class Level {
 	public List<Entity> getEntities() {
 		return entities;
 	}
-	
+
 	public void win() {
 		System.out.println("You win!");
 	}
-	
+
 	public void lose() {
 		System.out.println("You lose.");
 	}
