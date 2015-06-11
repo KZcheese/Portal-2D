@@ -43,7 +43,6 @@ public class SpriteSheet {
 			if (true) {
 				current++;
 				if (current > stop) {
-					System.out.println(repeat);
 					if (repeat) {
 						current = start;
 					} else {

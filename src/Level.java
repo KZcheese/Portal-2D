@@ -1,37 +1,59 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.Point;
+import java.awt.TexturePaint;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Level {
 	private List<Entity> entities;
 	private Point corner;
 	private Rectangle2D levelBounds;
 	public static final double BORDER_WIDTH = 100;
+	
+	private Queue<Entity> addQueue, removeQueue;
+	
+	private BufferedImage backgroundTile;
+	private Paint texture;
 
 	public Level() {
-		this(new LinkedList<Entity>(), new Rectangle2D.Double());
+		this(new Rectangle2D.Double());
 	}
 
-	public Level(LinkedList<Entity> entities, Rectangle2D bounds) {
-		this.entities = entities;
+	public Level(Rectangle2D bounds) {
+		this.entities = new LinkedList<>();
+		addQueue = new LinkedList<>();
+		removeQueue = new LinkedList<>();
 		corner = new Point((int) bounds.getMinX(), (int) bounds.getMinY());
 		this.levelBounds = bounds;
 	}
 
-	public Level(Rectangle2D bounds) {
-		entities = new LinkedList<>();
-		corner = new Point((int) bounds.getMinX(), (int) bounds.getMinY());
-		levelBounds = bounds;
+	public void setBackground(BufferedImage background) {
+		backgroundTile = background;
+		texture = new TexturePaint(backgroundTile, new Rectangle2D.Double(0, 0, background.getWidth(), background.getHeight()));
 	}
-
+	
 	public void update() {
+		Entity entity;
+		while (!addQueue.isEmpty()) {
+			entity = addQueue.poll();
+			entity.setLevel(this);
+			entities.add(entity);
+		}
+		while (!removeQueue.isEmpty()) {
+			entity = removeQueue.poll();
+			entity.setLevel(null);
+			entities.remove(entity);
+		}
+		
 		for (Entity e : entities) {
-			Point2D previous = e.getLocation();
 			e.updateEntity();
-			Point2D location = e.getLocation();
+			e.setGrounded(false);
 			if (e.physicsEnabled()) {
 				Rectangle2D bounds1 = e.getBounds();
 				for (Entity e2 : entities) {
@@ -66,9 +88,9 @@ public class Level {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
 													- bounds2.getMinX()), 0.0);
-									e2.collideLeft(e);
 									if (e.getVelX() > 0) {
 										e.resetMovementAcceleration();
+										e2.collideLeft(e);
 									} else {
 										// Fell off
 									}
@@ -77,9 +99,9 @@ public class Level {
 								else {
 									e.move(Math.abs(bounds1.getMinX()
 											- bounds2.getMaxX()), 0.0);
-									e2.collideRight(e);
 									if (e.getVelX() < 0) {
 										e.resetMovementAcceleration();
+										e2.collideRight(e);
 									} else {
 										// Fell off
 									}
@@ -92,19 +114,19 @@ public class Level {
 													* Math.abs(bounds1
 															.getMaxY()
 															- bounds2.getMinY()));
-									e2.collideTop(e);
-									e.resetJump();
 									if (e.getVelY() > 0) {
 										e.resetGravity();
+										e2.collideTop(e);
+										e.resetJump();
 									}
 									// Collision on bottom side of player
 								} else {
 									e.move(0.0,
 											Math.abs(bounds1.getMinY()
 													- bounds2.getMaxY()));
-									e2.collideBottom(e);
 									if (e.getVelY() < 0) {
 										e.resetGravity();
+										e2.collideBottom(e);
 									}
 									// Collision on top side of player
 								}
@@ -149,6 +171,11 @@ public class Level {
 	}
 
 	public void render(Graphics g) {
+		if (texture != null) {
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setPaint(texture);
+			g2d.fill(levelBounds);
+		}
 		for (Entity e : entities) {
 			e.render(g);
 		}
@@ -163,17 +190,23 @@ public class Level {
 	}
 
 	public void addEntity(Entity e) {
-		entities.add(e);
-		e.setLevel(this);
+		addQueue.offer(e);
 	}
 
 	public void removeEntity(Entity e) {
-		entities.remove(e);
-		e.setLevel(null);
+		removeQueue.offer(e);
 	}
 
 	public List<Entity> getEntities() {
 		return entities;
+	}
+	
+	public void win() {
+		System.out.println("You win!");
+	}
+	
+	public void lose() {
+		System.out.println("You lose.");
 	}
 
 }

@@ -30,21 +30,34 @@ public class Test {
 				12 * Block.SIZE));
 		final Renderer r = new Renderer(l);
 
-		final Entity entity = new Unit(new Rectangle2D.Double(25, 10, 48, 64));
-		// entity.pushForward();
-
+		final Entity entity = new Player();
 		final Controller c = new Controller(entity);
 		frame.addKeyListener(c);
 
-		l.addEntity(new SolidBlock(2, 9));
-		l.addEntity(new SolidBlock(2, 8));
-		l.addEntity(new SolidBlock(2, 7));
-		l.addEntity(new SolidBlock(2, 6));
-
-		for (int i = 1; i < 5; i++) {
-			l.addEntity(new SolidBlock(i, 11));
+		for (int i = 0; i < 16; i++) {
+			if (i == 8) {
+				l.addEntity(new Goal(i, 11));
+			} else {
+				l.addEntity(new SolidBlock(i, 11));
+			}
 		}
-		// l.addEntity(new Spike(4, 11));
+
+		l.addEntity(new SolidBlock(5, 9));
+		l.addEntity(new SolidBlock(4, 9));
+		
+		for (int i = 7; i < 14; i++) {
+			l.addEntity(new SolidBlock(i, 8));
+		}
+		
+		l.addEntity(new Spike(3, 10));
+		l.addEntity(new Spike(6, 10));
+		l.addEntity(new Spike(8, 7));
+		l.addEntity(new Spike(9, 7));
+		l.addEntity(new Spike(13, 7));
+		
+		l.addEntity(new SolidBlock(11, 7));
+		l.addEntity(new SolidBlock(11, 6));
+		l.addEntity(new SolidBlock(11, 5));
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {

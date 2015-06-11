@@ -8,20 +8,20 @@ public class Entity {
 	private Point2D location;
 	private Rectangle2D bounds;
 	private Level level;
-	private boolean usePhysics;
+	private boolean usePhysics, grounded;
 	private int jumps;
 	private SpriteSheet sprite;
 
 	private double topSpeed, velX, timeScale, velY;
+	private Vector velocity, movement;
 
-	public static final double GRAVITY = 1.0, FRICTION = 0.3;
+	public static final double GRAVITY = 1.0, FRICTION = 0.4;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
 		topSpeed = 10;
-		velX = 0;
-		velY = 0;
+		velocity = new Vector();
 		usePhysics = true;
 	}
 	
@@ -29,8 +29,7 @@ public class Entity {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
 		topSpeed = 10;
-		velX = 0;
-		velY = 0;
+		velocity = new Vector();
 		usePhysics = true;
 		this.sprite = sprite;
 	}
@@ -81,23 +80,22 @@ public class Entity {
 	}
 
 	public void updateLocation() {
-
 		// Gravity
 		if (usePhysics) {
-			velY += GRAVITY;
+			velocity.dy += GRAVITY;
 		}
 
 		// Movement
-		if (velX > 0) {
-			velX -= FRICTION;
-			if (velX < 0)
-				velX = 0;
+		if (velocity.dx > 0) {
+			velocity.dx -= FRICTION;
+			if (velocity.dx < 0)
+				velocity.dx = 0;
 		} else {
-			velX += FRICTION;
-			if (velX > 0)
-				velX = 0;
+			velocity.dx += FRICTION;
+			if (velocity.dx > 0)
+				velocity.dx = 0;
 		}
-		move(velX, velY);
+		move(velocity.dx, velocity.dy);
 	}
 
 	public void move(double dx, double dy) {
@@ -111,7 +109,7 @@ public class Entity {
 	}
 
 	public void resetGravity() {
-		velY = 0;
+		velocity.dy = 0;
 	}
 
 	public void render(Graphics g) {
@@ -131,7 +129,7 @@ public class Entity {
 
 	public void jump() {
 		if (jumps < 1) {
-			velY -= 20;
+			velocity.dy -= 20;
 			jumps++;
 		}
 		// System.out.println(jumps);
@@ -158,7 +156,7 @@ public class Entity {
 	}
 
 	public void resetMovementAcceleration() {
-		velX = 0;
+		velocity.dx = 0;
 	}
 
 	public void collideLeft(Entity e) {
@@ -168,13 +166,13 @@ public class Entity {
 	}
 
 	public void collideTop(Entity e) {
-		double signum = Math.signum(e.velX);
+		double signum = Math.signum(e.velocity.dx);
 		double friction = signum * 1;
-		e.velX -= friction;
-		if (Math.signum(e.velX) != signum) {
-			e.velX = 0;
+		e.velocity.dx -= friction;
+		if (Math.signum(e.velocity.dx) != signum) {
+			e.velocity.dx = 0;
 		}
-		
+		e.setGrounded(true);
 	}
 
 	public void collideBottom(Entity e) {
@@ -189,22 +187,46 @@ public class Entity {
 	}
 
 	public double getVelY() {
-		return velY;
+		return velocity.dy;
 	}
 
 	public Level getLevel() {
 		return level;
 	}
 
-	public void applyForce(double x, double y) {
-		velY += y;
-		velX += x;
-		if (topSpeed < Math.abs(velX)) {
-			velX = Math.signum(velX) * topSpeed;
+	public void applyForce(Vector v) {
+		velocity.add(v);
+		if (topSpeed < Math.abs(velocity.dx)) {
+			velocity.dx = Math.signum(velocity.dx) * topSpeed;
+		}
+	}
+	
+	public void applyMovement(Vector v) {
+		if (grounded) {
+			applyForce(v);
+		}
+	}
+	
+	public void applyForce(double angle, double magnitude) {
+		velocity.apply(angle, magnitude);
+		if (topSpeed < Math.abs(velocity.dx)) {
+			velocity.dx = Math.signum(velocity.dx) * topSpeed;
+		}
+	}
+	
+	public void applyMovement(double angle, double magnitude) {
+		if (grounded) {
+			applyForce(angle, magnitude);
+		} else {
+			applyForce(angle, magnitude / 1);
 		}
 	}
 	
 	public double getAngle() {
-		return Util.normalizeAngle(Math.atan2(velY, velX));
+		return velocity.getAngle();
+	}
+	
+	public void setGrounded(boolean grounded) {
+		this.grounded = grounded;
 	}
 }

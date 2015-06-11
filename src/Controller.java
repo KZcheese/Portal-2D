@@ -50,10 +50,10 @@ public class Controller implements KeyListener {
 			unit.jump();
 		}
 		if (keysDown[LEFT]) {
-			unit.applyForce(-1.5, 0);
+			unit.applyMovement(Math.PI, 2);
 		}
 		if (keysDown[RIGHT]) {
-			unit.applyForce(1.5, 0);
+			unit.applyMovement(0, 2);
 		}
 	}
 }
