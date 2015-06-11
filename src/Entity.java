@@ -106,12 +106,22 @@ public class Entity {
 		move(velocity.dx, velocity.dy);
 	}
 
+	/**
+	 * Translates the entity a specified X and Y distance.
+	 * @param dx X distance to translate
+	 * @param dy Y distance to translate
+	 */
 	public void move(double dx, double dy) {
 		location.setLocation(location.getX() + dx, location.getY() + dy);
 		bounds.setFrame(location.getX(), location.getY(), bounds.getWidth(),
 				bounds.getHeight());
 	}
 
+	/**
+	 * Sets the X and Y coordinates of the entity to the specified coordinates.
+	 * @param x X coordinate
+	 * @param x Y coordinate
+	 */
 	public void setLocation(double x, double y) {
 		move(x - location.getX(), y - location.getY());
 	}
