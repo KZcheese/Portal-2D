@@ -88,12 +88,14 @@ public class Entity {
 		// Movement
 		if (velocity.dx > 0) {
 			velocity.dx -= FRICTION;
-			if (velocity.dx < 0)
+			if (velocity.dx < 0) {
 				velocity.dx = 0;
+			}
 		} else {
 			velocity.dx += FRICTION;
-			if (velocity.dx > 0)
+			if (velocity.dx > 0) {
 				velocity.dx = 0;
+			}
 		}
 		move(velocity.dx, velocity.dy);
 	}
