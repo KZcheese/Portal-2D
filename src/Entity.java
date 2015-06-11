@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 public class Entity {
 	private Point2D location;
@@ -15,13 +16,21 @@ public class Entity {
 	private double topSpeed, velX, timeScale, velY;
 	private Vector velocity, movement;
 
-	public static final double GRAVITY = 1.0, FRICTION = 0.4;
+	public static final double GRAVITY = 1.0, FRICTION = 0.4, JUMP_FORCE = 20;
+	
+	private SpriteSheet.Animation[] anims;
+	
+	public static final int
+		STAND = 0,
+		WALK = 2,
+		JUMP = 1;
 
 	public Entity(Rectangle2D bounds) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
 		topSpeed = 10;
 		velocity = new Vector();
+		timeScale = 1;
 		usePhysics = true;
 	}
 	
@@ -31,6 +40,7 @@ public class Entity {
 		topSpeed = 10;
 		velocity = new Vector();
 		usePhysics = true;
+		timeScale = 1;
 		this.sprite = sprite;
 	}
 
@@ -83,22 +93,24 @@ public class Entity {
 	}
 
 	/**
-	 * Updates the location of the entity according to its X and Y velocities, and updates its velocities according to external forces such as gravity and air friction.
+	 * Updates the location of the entity according to its X and Y
+	 * velocities, and updates its velocities according to external
+	 * forces such as gravity and air friction.
 	 */
 	public void updateLocation() {
 		// Gravity
 		if (usePhysics) {
-			velocity.dy += GRAVITY;
+			velocity.dy += GRAVITY * timeScale;
 		}
 
 		// Movement
 		if (velocity.dx > 0) {
-			velocity.dx -= FRICTION;
+			velocity.dx -= FRICTION * timeScale;
 			if (velocity.dx < 0) {
 				velocity.dx = 0;
 			}
 		} else {
-			velocity.dx += FRICTION;
+			velocity.dx += FRICTION * timeScale;
 			if (velocity.dx > 0) {
 				velocity.dx = 0;
 			}
@@ -118,7 +130,8 @@ public class Entity {
 	}
 
 	/**
-	 * Sets the X and Y coordinates of the entity to the specified coordinates.
+	 * Sets the X and Y coordinates of the entity to the specified
+	 * coordinates.
 	 * @param x X coordinate
 	 * @param x Y coordinate
 	 */
@@ -147,7 +160,7 @@ public class Entity {
 
 	public void jump() {
 		if (jumps < 1) {
-			velocity.dy -= 20;
+			velocity.dy -= 20 * timeScale;
 			jumps++;
 		}
 		// System.out.println(jumps);
@@ -186,7 +199,7 @@ public class Entity {
 	public void collideTop(Entity e) {
 		double signum = Math.signum(e.velocity.dx);
 		double friction = signum * 1;
-		e.velocity.dx -= friction;
+		e.velocity.dx -= friction * timeScale;
 		if (Math.signum(e.velocity.dx) != signum) {
 			e.velocity.dx = 0;
 		}
@@ -214,8 +227,9 @@ public class Entity {
 
 	public void applyForce(Vector v) {
 		velocity.add(v);
-		if (topSpeed < Math.abs(velocity.dx)) {
-			velocity.dx = Math.signum(velocity.dx) * topSpeed;
+		double speed = topSpeed * timeScale;
+		if (speed < Math.abs(velocity.dx)) {
+			velocity.dx = Math.signum(velocity.dx) * speed;
 		}
 	}
 	
@@ -227,8 +241,9 @@ public class Entity {
 	
 	public void applyForce(double angle, double magnitude) {
 		velocity.apply(angle, magnitude);
-		if (topSpeed < Math.abs(velocity.dx)) {
-			velocity.dx = Math.signum(velocity.dx) * topSpeed;
+		double speed = topSpeed * timeScale;
+		if (speed < Math.abs(velocity.dx)) {
+			velocity.dx = Math.signum(velocity.dx) * speed;
 		}
 	}
 	
@@ -246,5 +261,17 @@ public class Entity {
 	
 	public void setGrounded(boolean grounded) {
 		this.grounded = grounded;
+	}
+	
+	public void setAnimations(SpriteSheet.Animation[] anims) {
+		this.anims = anims;
+	}
+	
+	public void playAnimation(int anim) {
+		if (sprite != null) {
+			if (-1 < anim && anim < anims.length) {
+				sprite.playAnimation(anims[anim]);
+			}
+		}
 	}
 }

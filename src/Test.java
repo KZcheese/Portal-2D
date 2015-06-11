@@ -13,18 +13,6 @@ public class Test {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Test");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		@SuppressWarnings("serial")
-		class Renderer extends JComponent {
-			public Level level;
-
-			public Renderer(Level level) {
-				this.level = level;
-			}
-
-			public void paintComponent(Graphics g) {
-				level.render(g);
-			}
-		}
 
 		final Level l = new Level(new Rectangle2D.Double(0, 0, 16 * Block.SIZE,
 				12 * Block.SIZE));
