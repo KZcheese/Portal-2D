@@ -1,13 +1,14 @@
 import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
+import java.awt.Transparency;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
+@SuppressWarnings({ "serial" })
 public class Renderer extends JComponent {
 	public Level level;
 
@@ -20,12 +21,13 @@ public class Renderer extends JComponent {
 		BufferedImage canvas = new BufferedImage((int) bounds.getWidth(),
 				(int) bounds.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		level.render(canvas.getGraphics());
-		double aspectRatio = (canvas.getWidth() / canvas.getHeight());
+
 		double scaleFactor;
-//		if (getHeight() * aspectRatio > getWidth())
-//			scaleFactor = (double) getWidth() / canvas.getWidth();
-//		else
-			scaleFactor = (double) getHeight() / canvas.getHeight();
+		// double aspectRatio = (canvas.getWidth() / canvas.getHeight());
+		// if (getHeight() * aspectRatio > getWidth())
+		// scaleFactor = (double) getWidth() / canvas.getWidth();
+		// else
+		scaleFactor = (double) getHeight() / canvas.getHeight();
 		Image scaled = canvas.getScaledInstance(
 				(int) (canvas.getWidth() * scaleFactor),
 				(int) (canvas.getHeight() * scaleFactor),
