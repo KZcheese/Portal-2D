@@ -66,6 +66,9 @@ public class Entity {
 		return bounds;
 	}
 
+	/**
+	 * Updates the entity only if the level is not null.
+	 */
 	public void updateEntity() {
 		if (getLevel() != null) {
 			update();
@@ -79,6 +82,9 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Updates the location of the entity according to its X and Y velocities, and updates its velocities according to external forces such as gravity and air friction.
+	 */
 	public void updateLocation() {
 		// Gravity
 		if (usePhysics) {
