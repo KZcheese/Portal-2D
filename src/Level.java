@@ -95,12 +95,13 @@ public class Level {
 							// System.out.println("vd:" + bounds2.getHeight());
 							if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
 									/ (bounds2.getHeight() * bounds1
-											.getHeight()) - 0.000) {
+											.getHeight())) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
 													- bounds2.getMinX()), 0.0);
 									if (e.getVelX() > 0) {
+										System.out.println("Hit left");
 										e.resetMovementAcceleration();
 										e2.collideLeft(e);
 									} else {

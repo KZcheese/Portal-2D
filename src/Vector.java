@@ -14,7 +14,8 @@ public class Vector {
 	}
 	
 	public double getMagnitude() {
-		return Math.sqrt(Math.abs(dx * dx + dy * dy));
+		System.out.println("dx: " + dx + " dy: " + dy);
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
 	public void setAngleAndMagnitude(double angle, double magnitude) {

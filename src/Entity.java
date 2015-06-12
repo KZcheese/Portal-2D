@@ -13,7 +13,7 @@ public class Entity {
 	private int jumps;
 	private SpriteSheet sprite;
 
-	private double topSpeed, velX, timeScale, velY;
+	private double topSpeed, timeScale;
 	private Vector momentum, movement;
 
 	public static final double GRAVITY = 1.0, FRICTION = 0.4, JUMP_FORCE = 20;
@@ -216,7 +216,7 @@ public class Entity {
 	}
 
 	public double getVelX() {
-		return velX;
+		return momentum.dx + movement.dx;
 	}
 
 	public double getVelY() {
@@ -248,7 +248,6 @@ public class Entity {
 	public void applyMovement(double angle, double magnitude) {
 		if (grounded) {
 			movement.apply(angle, magnitude);
-			System.out.println(movement.dx);
 			double speed = topSpeed * timeScale;
 			if (speed < Math.abs(movement.dx)) {
 				movement.dx = Math.signum(movement.dx) * speed;

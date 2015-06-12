@@ -5,21 +5,15 @@ public class CheckPoint extends Block {
 		s.playAnimation(new SpriteSheet.Animation(0, 0, true));
 		setSprite(s);
 	}
-	
-//	public void collideTop(Entity e) {
-//		super.collideTop(e);
-//		if (e instanceof Player) {
-//			getLevel().setLastCheckPoint(this);
-//		}
-//	}
-	
 	public void collideTop(Entity e) {
+		super.collideTop(e);
+		if (e instanceof Player) {
+			getLevel().setLastCheckPoint(this);
+		}
 		if (e.physicsEnabled()) {
 			moveToSide(e, Block.RIGHT);
 			Vector momentum = e.getNetMomentum();
-			momentum.rotate(Math.PI / 2);
-			e.resetGravity();
-			e.resetMovementAcceleration();
+			momentum.setAngle(0);
 			e.applyForce(momentum);
 		}
 	}
