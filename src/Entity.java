@@ -14,7 +14,7 @@ public class Entity {
 	private SpriteSheet sprite;
 
 	private double topSpeed, velX, timeScale, velY;
-	private Vector velocity, movement;
+	private Vector momentum, movement;
 
 	public static final double GRAVITY = 1.0, FRICTION = 0.4, JUMP_FORCE = 20;
 	
@@ -26,19 +26,15 @@ public class Entity {
 		JUMP = 1;
 
 	public Entity(Rectangle2D bounds) {
-		this.bounds = bounds;
-		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
-		topSpeed = 10;
-		velocity = new Vector();
-		timeScale = 1;
-		usePhysics = true;
+		this(bounds, null);
 	}
 	
 	public Entity(Rectangle2D bounds, SpriteSheet sprite) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
 		topSpeed = 10;
-		velocity = new Vector();
+		momentum = new Vector();
+		movement = new Vector();
 		usePhysics = true;
 		timeScale = 1;
 		this.sprite = sprite;
@@ -100,22 +96,26 @@ public class Entity {
 	public void updateLocation() {
 		// Gravity
 		if (usePhysics) {
-			velocity.dy += GRAVITY * timeScale;
+			momentum.dy += GRAVITY * timeScale;
 		}
 
 		// Movement
-		if (velocity.dx > 0) {
-			velocity.dx -= FRICTION * timeScale;
-			if (velocity.dx < 0) {
-				velocity.dx = 0;
-			}
-		} else {
-			velocity.dx += FRICTION * timeScale;
-			if (velocity.dx > 0) {
-				velocity.dx = 0;
-			}
+		applyFriction(FRICTION);
+		
+		move(momentum.dx + movement.dx, momentum.dy + movement.dy);
+	}
+	
+	public void applyFriction(double friction) {
+		double temp1 = momentum.dx;
+		momentum.dx -= Math.signum(momentum.dx) * friction * timeScale;
+		if (Math.signum(temp1) != Math.signum(momentum.dx)) {
+			momentum.dx = 0;
 		}
-		move(velocity.dx, velocity.dy);
+		double temp2 = movement.dx;
+		movement.dx -= Math.signum(movement.dx) * friction * timeScale;
+		if (Math.signum(temp2) != Math.signum(movement.dx)) {
+			movement.dx = 0;
+		}
 	}
 
 	/**
@@ -140,7 +140,8 @@ public class Entity {
 	}
 
 	public void resetGravity() {
-		velocity.dy = 0;
+		momentum.dy = 0;
+		movement.dy = 0;
 	}
 
 	public void render(Graphics g) {
@@ -160,7 +161,7 @@ public class Entity {
 
 	public void jump() {
 		if (jumps < 1) {
-			velocity.dy -= 20 * timeScale;
+			momentum.dy -= 21 * timeScale;
 			jumps++;
 		}
 		// System.out.println(jumps);
@@ -187,7 +188,8 @@ public class Entity {
 	}
 
 	public void resetMovementAcceleration() {
-		velocity.dx = 0;
+		movement.dx = 0;
+		momentum.dx = 0;
 	}
 
 	public void collideLeft(Entity e) {
@@ -197,11 +199,11 @@ public class Entity {
 	}
 
 	public void collideTop(Entity e) {
-		double signum = Math.signum(e.velocity.dx);
+		double signum = Math.signum(e.momentum.dx);
 		double friction = signum * 1;
-		e.velocity.dx -= friction * timeScale;
-		if (Math.signum(e.velocity.dx) != signum) {
-			e.velocity.dx = 0;
+		e.momentum.dx -= friction * timeScale;
+		if (Math.signum(e.momentum.dx) != signum) {
+			e.momentum.dx = 0;
 		}
 		e.setGrounded(true);
 	}
@@ -218,7 +220,7 @@ public class Entity {
 	}
 
 	public double getVelY() {
-		return velocity.dy;
+		return momentum.dy;
 	}
 
 	public Level getLevel() {
@@ -226,37 +228,42 @@ public class Entity {
 	}
 
 	public void applyForce(Vector v) {
-		velocity.add(v);
-		double speed = topSpeed * timeScale;
-		if (speed < Math.abs(velocity.dx)) {
-			velocity.dx = Math.signum(velocity.dx) * speed;
-		}
+		momentum.add(v);
 	}
 	
 	public void applyMovement(Vector v) {
 		if (grounded) {
-			applyForce(v);
+			movement.add(v);
+			double speed = topSpeed * timeScale;
+			if (speed < Math.abs(movement.dx)) {
+				movement.dx = Math.signum(movement.dx) * speed;
+			}
 		}
 	}
 	
 	public void applyForce(double angle, double magnitude) {
-		velocity.apply(angle, magnitude);
-		double speed = topSpeed * timeScale;
-		if (speed < Math.abs(velocity.dx)) {
-			velocity.dx = Math.signum(velocity.dx) * speed;
-		}
+		momentum.apply(angle, magnitude);
 	}
 	
 	public void applyMovement(double angle, double magnitude) {
 		if (grounded) {
-			applyForce(angle, magnitude);
+			movement.apply(angle, magnitude);
+			System.out.println(movement.dx);
+			double speed = topSpeed * timeScale;
+			if (speed < Math.abs(movement.dx)) {
+				movement.dx = Math.signum(movement.dx) * speed;
+			}
 		} else {
-			applyForce(angle, magnitude / 1);
+			movement.apply(angle, magnitude);
+			double speed = topSpeed * timeScale;
+			if (speed < Math.abs(movement.dx)) {
+				movement.dx = Math.signum(movement.dx) * speed;
+			}
 		}
 	}
 	
 	public double getAngle() {
-		return velocity.getAngle();
+		return momentum.getAngle();
 	}
 	
 	public void setGrounded(boolean grounded) {
@@ -273,5 +280,15 @@ public class Entity {
 				sprite.playAnimation(anims[anim]);
 			}
 		}
+	}
+	
+	public Vector getMomentum() {
+		return momentum;
+	}
+	
+	public Vector getNetMomentum() {
+		Vector v = new Vector(momentum.dx, momentum.dy);
+		v.add(movement);
+		return v;
 	}
 }
