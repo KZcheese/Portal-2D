@@ -23,14 +23,7 @@ public class Player extends Unit {
 	}
 	
 	public void kill() {
-		CheckPoint cp = getLevel().getLastCheckPoint();
-		if (cp == null) {
-			lose();
-			super.kill();
-		} else {
-			cp.moveToSide(this, Block.TOP);
-			resetGravity();
-			resetMovementAcceleration();
-		}
+		super.kill();
+		lose();
 	}
 }

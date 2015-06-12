@@ -14,8 +14,6 @@ public class Test {
 		JFrame frame = new JFrame("Test");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		System.setProperty("sun.java2d.opengl", "true");
-		
 		final Level l = new Level(new Rectangle2D.Double(0, 0, 16 * Block.SIZE,
 				12 * Block.SIZE));
 		final Renderer r = new Renderer(l);
@@ -27,8 +25,6 @@ public class Test {
 		for (int i = 0; i < 16; i++) {
 			if (i == 8) {
 				l.addEntity(new Goal(i, 11));
-			} else if (i == 0) {
-				l.addEntity(new CheckPoint(i, 11));
 			} else {
 				l.addEntity(new SolidBlock(i, 11));
 			}
@@ -49,7 +45,7 @@ public class Test {
 		
 		l.addEntity(new SolidBlock(11, 7));
 		l.addEntity(new SolidBlock(11, 6));
-		l.addEntity(new CheckPoint(11, 5));
+		l.addEntity(new SolidBlock(11, 5));
 
 		final int[] a = { 0 };
 		Timer t = new Timer(16, new ActionListener() {

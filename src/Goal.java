@@ -7,7 +7,6 @@ public class Goal extends Block {
 	}
 	
 	public void collideTop(Entity e) {
-		super.collideTop(e);
 		if (e instanceof Player) {
 			((Player) e).win();
 		}

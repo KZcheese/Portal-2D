@@ -21,8 +21,6 @@ public class Level {
 	private BufferedImage backgroundTile;
 	private Paint texture;
 
-	private CheckPoint lastCheckPoint;
-	
 	public Level() {
 		this(new Rectangle2D.Double());
 	}
@@ -33,14 +31,6 @@ public class Level {
 		removeQueue = new LinkedList<>();
 		corner = new Point((int) bounds.getMinX(), (int) bounds.getMinY());
 		this.levelBounds = bounds;
-	}
-	
-	public void setLastCheckPoint(CheckPoint p) {
-		this.lastCheckPoint = p;
-	}
-	
-	public CheckPoint getLastCheckPoint() {
-		return lastCheckPoint;
 	}
 
 	public void setBackground(BufferedImage background) {
@@ -95,7 +85,7 @@ public class Level {
 							// System.out.println("vd:" + bounds2.getHeight());
 							if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
 									/ (bounds2.getHeight() * bounds1
-											.getHeight()) - 0.000) {
+											.getHeight())) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
