@@ -40,6 +40,9 @@ public class Controller implements KeyListener {
 			keysDown[UP] = false;
 			jumped = false;
 		}
+		if (keyCode == KeyEvent.VK_SHIFT) {
+			unit.applyForce(-Math.PI / 4, 50);
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {

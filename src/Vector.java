@@ -32,5 +32,21 @@ public class Vector {
 		v.setAngleAndMagnitude(angle, magnitude);
 		add(v);
 	}
+	
+	public void setAngle(double angle) {
+		double magnitude = getMagnitude();
+		dx = Math.cos(angle) * magnitude;
+		dy = Math.sin(angle) * magnitude;
+	}
+	
+	public void rotate(double angle) {
+		setAngle(angle - getAngle());
+	}
+	
+	public void setMagnitude(double magnitude) {
+		double angle = getAngle();
+		dx = Math.cos(angle) * magnitude;
+		dy = Math.sin(angle) * magnitude;
+	}
 }
 
