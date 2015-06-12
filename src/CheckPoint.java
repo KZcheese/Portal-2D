@@ -6,10 +6,21 @@ public class CheckPoint extends Block {
 		setSprite(s);
 	}
 	
+//	public void collideTop(Entity e) {
+//		super.collideTop(e);
+//		if (e instanceof Player) {
+//			getLevel().setLastCheckPoint(this);
+//		}
+//	}
+	
 	public void collideTop(Entity e) {
-		super.collideTop(e);
-		if (e instanceof Player) {
-			getLevel().setLastCheckPoint(this);
+		if (e.physicsEnabled()) {
+			moveToSide(e, Block.RIGHT);
+			Vector momentum = e.getNetMomentum();
+			momentum.rotate(Math.PI / 2);
+			e.resetGravity();
+			e.resetMovementAcceleration();
+			e.applyForce(momentum);
 		}
 	}
 }
