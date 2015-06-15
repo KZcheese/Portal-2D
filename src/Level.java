@@ -23,6 +23,8 @@ public class Level {
 
 	private CheckPoint lastCheckPoint;
 	
+	private double timeScale;
+	
 	public Level() {
 		this(new Rectangle2D.Double());
 	}
@@ -63,6 +65,7 @@ public class Level {
 		}
 
 		for (Entity e : entities) {
+			e.setTimeScale(timeScale);
 			e.updateEntity();
 			e.setGrounded(false);
 			if (e.physicsEnabled()) {
@@ -220,6 +223,19 @@ public class Level {
 
 	public void lose() {
 		System.out.println("You lose.");
+	}
+	
+	public boolean hasAnyLivingPlayer() {
+		for (Entity e : entities) {
+			if (e instanceof Player) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void setTimeScale(double timeScale) {
+		this.timeScale = timeScale;
 	}
 
 }
