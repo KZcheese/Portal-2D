@@ -1,24 +1,9 @@
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 
-import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -45,7 +30,7 @@ public class Game extends JFrame {
 	
 	private JPanel menu;
 	
-	private double globalTimeScale = 0.1;
+	private double globalTimeScale = 1;
 	
 	private Timer spawnTimer;
 	
@@ -63,7 +48,7 @@ public class Game extends JFrame {
 					System.out.println("Map updating");
 					stop = System.nanoTime();
 					
-					if (false) {
+					if (!map.hasAnyLivingPlayer()) {
 						paused = true;
 					}
 					
