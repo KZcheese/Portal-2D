@@ -10,11 +10,5 @@ public class CheckPoint extends Block {
 		if (e instanceof Player) {
 			getLevel().setLastCheckPoint(this);
 		}
-		if (e.physicsEnabled()) {
-			moveToSide(e, Block.RIGHT);
-			Vector momentum = e.getNetMomentum();
-			momentum.setAngle(0);
-			e.applyForce(momentum);
-		}
 	}
 }
