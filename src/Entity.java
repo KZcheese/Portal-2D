@@ -16,7 +16,7 @@ public class Entity {
 	private double topSpeed, timeScale;
 	private Vector momentum, movement;
 
-	public static final double GRAVITY = 1.0, FRICTION = 0.4, JUMP_FORCE = 20;
+	public static final double GRAVITY = 0.6, FRICTION = 0.4, JUMP_FORCE = 18;
 	
 	private SpriteSheet.Animation[] anims;
 	
@@ -32,7 +32,7 @@ public class Entity {
 	public Entity(Rectangle2D bounds, SpriteSheet sprite) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
-		topSpeed = 10;
+		topSpeed = 8;
 		momentum = new Vector();
 		movement = new Vector();
 		usePhysics = true;

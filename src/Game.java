@@ -45,7 +45,7 @@ public class Game extends JFrame {
 	
 	private JPanel menu;
 	
-	private double globalTimeScale = 1;
+	private double globalTimeScale = 0.1;
 	
 	private Timer spawnTimer;
 	
@@ -136,6 +136,8 @@ public class Game extends JFrame {
 	}
 	
 	public Game() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		System.out.println("Hi");
 		map = new Level(new Rectangle2D.Double(0, 0, 16 * Block.SIZE,
 				12 * Block.SIZE));
