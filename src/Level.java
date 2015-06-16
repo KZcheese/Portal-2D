@@ -81,29 +81,30 @@ public class Level {
 									- bounds2.getCenterX());
 							double vd = Math.abs(bounds1.getCenterY()
 									- bounds2.getCenterY());
-		
-//							 System.out.println("hd: " + hd);
-//							 System.out.println("vd: " + vd);
+							// System.out.println("1X: " +
+							// bounds1.getCenterX());
+							// System.out.println("1Y:" + bounds1.getCenterY());
+							// System.out.println("2X: " +
+							// bounds2.getCenterX());
+							// System.out.println("2Y: " +
+							// bounds2.getCenterY());
+							// System.out.println("hd: " + hd);
+							// System.out.println("vd: " + vd);
 
 							// Now compare them to know the side of
 							// collision
 
-							 System.out.println("hd:" + hd / (bounds2.getWidth() * bounds1.getWidth()));
-							 System.out.println("vd:" + vd
-										/ (bounds2.getHeight() * bounds1.getHeight()));
-							if (hd / (bounds2.getWidth() * bounds1.getWidth()) > vd
-									/ (bounds2.getHeight() * bounds1.getHeight())) {
-//								System.out.println("Hit horiz");
-//								System.out.println("1X: " + bounds1.getMinX());
-//								System.out.println("1Y:" + bounds1.getMinY());
-//								System.out.println("2X: " + bounds2.getMinX());
-//								System.out.println("2Y: " + bounds2.getMinY());
+							// System.out.println("hd:" + bounds2.getWidth());
+							// System.out.println("vd:" + bounds2.getHeight());
+							if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
+									/ (bounds2.getHeight() * bounds1
+											.getHeight())) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
 													- bounds2.getMinX()), 0.0);
 									if (e.getVelX() > 0) {
-
+										System.out.println("Hit left");
 										e.resetMovementAcceleration();
 										e2.collideLeft(e);
 									} else {
@@ -114,7 +115,6 @@ public class Level {
 								else {
 									e.move(Math.abs(bounds1.getMinX()
 											- bounds2.getMaxX()), 0.0);
-
 									if (e.getVelX() < 0) {
 										e.resetMovementAcceleration();
 										e2.collideRight(e);

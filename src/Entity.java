@@ -16,7 +16,7 @@ public class Entity {
 	private double topSpeed, timeScale;
 	private Vector momentum, movement;
 
-	public static final double GRAVITY = 0.1, FRICTION = 0.4, JUMP_FORCE = 18;
+	public static final double GRAVITY = 0.6, FRICTION = 0.4, JUMP_FORCE = 18;
 	
 	private SpriteSheet.Animation[] anims;
 	
