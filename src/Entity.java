@@ -161,7 +161,7 @@ public class Entity {
 
 	public void jump() {
 		if (jumps < 1) {
-			momentum.dy -= 20 * timeScale;
+			momentum.dy -= 21 * timeScale;
 			jumps++;
 		}
 		// System.out.println(jumps);
