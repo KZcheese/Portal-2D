@@ -1,4 +1,5 @@
 import java.awt.Image;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 
@@ -36,6 +37,10 @@ public class SpriteSheet {
 			return current < stop;
 		}
 		
+		public void restart() {
+			current = start;
+		}
+		
 		/**
 		 * Increments the current frame if the animation is not complete.
 		 */
@@ -56,6 +61,7 @@ public class SpriteSheet {
 	private BufferedImage image;
 	private Animation currentAnimation;
 	private int width, height, frames;
+	private Point2D[][] hardPoints;
 	
 	public SpriteSheet(BufferedImage image, int width, int height, int frames) {
 		this.image = image;
@@ -71,11 +77,20 @@ public class SpriteSheet {
 		return image.getSubimage(getCol(frame) * width, getRow(frame) * height, width, height);
 	}
 	
+	public void setHardPoints(Point2D[][] hardPoints) {
+		this.hardPoints = hardPoints;
+	}
+	
+	public Point2D getHardPoint(int point) {
+		return hardPoints[currentAnimation.current][point];
+	}
+	
 	public void update() {
 		currentAnimation.update();
 	}
 	
 	public void playAnimation(Animation anim) {
+		anim.restart();
 		currentAnimation = anim;
 	}
 	

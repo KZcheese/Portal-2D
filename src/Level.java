@@ -22,9 +22,9 @@ public class Level {
 	private Paint texture;
 
 	private CheckPoint lastCheckPoint;
-	
+
 	private double timeScale;
-	
+
 	public Level() {
 		this(new Rectangle2D.Double());
 	}
@@ -36,11 +36,11 @@ public class Level {
 		corner = new Point((int) bounds.getMinX(), (int) bounds.getMinY());
 		this.levelBounds = bounds;
 	}
-	
+
 	public void setLastCheckPoint(CheckPoint p) {
 		this.lastCheckPoint = p;
 	}
-	
+
 	public CheckPoint getLastCheckPoint() {
 		return lastCheckPoint;
 	}
@@ -96,9 +96,8 @@ public class Level {
 
 							// System.out.println("hd:" + bounds2.getWidth());
 							// System.out.println("vd:" + bounds2.getHeight());
-							if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
-									/ (bounds2.getHeight() * bounds1
-											.getHeight())) {
+							if (hd / (bounds2.getWidth() * bounds1.getWidth()) > vd
+									/ (bounds2.getHeight() * bounds2.getHeight())) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
 											* Math.abs(bounds1.getMaxX()
@@ -207,10 +206,16 @@ public class Level {
 
 	public void addEntity(Entity e) {
 		addQueue.offer(e);
+		for (Entity e2 : e.getEntities()) {
+			addEntity(e2);
+		}
 	}
 
 	public void removeEntity(Entity e) {
 		removeQueue.offer(e);
+		for (Entity e2 : e.getEntities()) {
+			removeEntity(e2);
+		}
 	}
 
 	public List<Entity> getEntities() {
@@ -224,7 +229,7 @@ public class Level {
 	public void lose() {
 		System.out.println("You lose.");
 	}
-	
+
 	public boolean hasAnyLivingPlayer() {
 		for (Entity e : entities) {
 			if (e instanceof Player) {
@@ -233,7 +238,7 @@ public class Level {
 		}
 		return false;
 	}
-	
+
 	public void setTimeScale(double timeScale) {
 		this.timeScale = timeScale;
 	}

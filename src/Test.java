@@ -36,17 +36,17 @@ public class Test {
 
 		l.addEntity(new SolidBlock(5, 9));
 		l.addEntity(new SolidBlock(4, 9));
-		
+
 		for (int i = 7; i < 14; i++) {
 			l.addEntity(new SolidBlock(i, 8));
 		}
-		
+
 		l.addEntity(new Spike(3, 10));
 		l.addEntity(new Spike(6, 10));
 		l.addEntity(new Spike(8, 7));
 		l.addEntity(new Spike(9, 7));
 		l.addEntity(new Spike(13, 7));
-		
+
 		l.addEntity(new SolidBlock(11, 7));
 		l.addEntity(new SolidBlock(11, 6));
 		l.addEntity(new CheckPoint(11, 5));
