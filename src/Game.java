@@ -18,7 +18,7 @@ public class Game extends JFrame {
 	private Controller controller;
 	private Renderer view;
 	public int targetFrameRate = 60;
-	private static final int TARGET_FRAME_DURATION = 16;
+	private static final int TARGET_FRAME_DURATION = 0;
 	private boolean showDebug;
 	private boolean fullScreen;
 	private Rectangle fullScreenBounds;
@@ -133,26 +133,26 @@ public class Game extends JFrame {
 		addKeyListener(controller);
 
 		int var = 0;
-		
+
 		for (int i = 0; i < 20; i++) {
 			var = i % 2;
 			map.addEntity(new FrameBlock(i, 13, var));
 			map.addEntity(new FrameBlock(i, 0, var));
-			
+
 			if (1 < i && i < 18) {
 				map.addEntity(new SolidBlock(i, 12));
 				map.addEntity(new SolidBlock(i, 1));
 			}
 		}
-		
+
 		for (int i = 0; i < 14; i++) {
 			var = i % 2;
 			map.addEntity(new FrameBlock(0, i, var));
 			map.addEntity(new FrameBlock(19, i, var));
-			
+
 			if (2 < i && i < 11) {
 				map.addEntity(new SolidBlock(1, i));
-				map.addEntity(new SolidBlock(18, i));	
+				map.addEntity(new SolidBlock(18, i));
 			} else {
 				map.addEntity(new FrameBlock(1, i));
 				map.addEntity(new FrameBlock(18, i));

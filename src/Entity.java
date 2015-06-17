@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -21,7 +20,7 @@ public class Entity {
 	private double topSpeed, timeScale, angle;
 	private Vector momentum, movement;
 
-	public static final double GRAVITY = 0.8, FRICTION = 0.4, JUMP_FORCE = 18;
+	public static final double GRAVITY = 0.8, FRICTION = 0.3, JUMP_FORCE = 18;
 
 	private SpriteSheet.Animation[] anims;
 
@@ -390,16 +389,15 @@ public class Entity {
 	public void setSpeed(double speed) {
 		this.topSpeed = speed;
 	}
-	
+
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
-	
+
 	public void rotateTurrets(Point2D point) {
 		for (Entity e : entities) {
 			if (e instanceof Turret) {
 				e.setAngle(0);
-				// Change
 			}
 		}
 	}
