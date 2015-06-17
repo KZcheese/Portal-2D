@@ -106,7 +106,7 @@ public class Level {
 
 			// System.out.println("hd:" + bounds2.getWidth());
 			// System.out.println("vd:" + bounds2.getHeight());
-			if (hdc - 0.00209 >= vdc) {
+			if (hdc - 0.002095 >= vdc) {
 				// System.out.println("hd: " + hd);
 				// System.out.println("vd: " + vd);
 //				System.out.println("hdc: " + hdc);
