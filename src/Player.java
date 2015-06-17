@@ -2,14 +2,18 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends Unit {
 	public Player() {
-		super(new Rectangle2D.Double(0, 0, 48, 64));
-		SpriteSheet sprite = new SpriteSheet(Util.readImage("sprite_test.png"),
-				48, 64, 8);
-		SpriteSheet.Animation a1 = new SpriteSheet.Animation(0, 5, false);
-		SpriteSheet.Animation a2 = new SpriteSheet.Animation(6, 7, true);
-		sprite.playAnimation(a2);
+		super(new Rectangle2D.Double(0, 0, 80, 120));
+		SpriteSheet sprite = new SpriteSheet(Util.readImage("mario.png"),
+				80, 120, 28);
+		SpriteSheet.Animation 
+			a0 = new SpriteSheet.Animation(4, 4, false),
+			a1 = new SpriteSheet.Animation(1, 4, true),
+			a2 = new SpriteSheet.Animation(5, 6, false, 0.5),
+			a3 = new SpriteSheet.Animation(13, 13, false, 0.7);
+		System.out.println(a1);
+		sprite.playAnimation(a1);
 		setSprite(sprite);
-		setAnimations(new SpriteSheet.Animation[] { a2, a1 });
+		setAnimations(new SpriteSheet.Animation[] { a0, a1, a2, a3 });
 	}
 
 	public void win() {

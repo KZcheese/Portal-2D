@@ -1,8 +1,12 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,21 +14,21 @@ public class Entity {
 	private Point2D location;
 	private Rectangle2D bounds;
 	private Level level;
-	private boolean usePhysics, grounded;
+	private boolean usePhysics, grounded, facingRight;
 	private int jumps;
 	private SpriteSheet sprite;
 
 	private double topSpeed, timeScale;
 	private Vector momentum, movement;
 
-	public static final double GRAVITY = 0.6, FRICTION = 0.4, JUMP_FORCE = 18;
+	public static final double GRAVITY = 0.8, FRICTION = 0.4, JUMP_FORCE = 18;
 
 	private SpriteSheet.Animation[] anims;
 
 	private List<ActionTimer> timers;
 	private List<Entity> entities;
 
-	public static final int STAND = 0, WALK = 2, JUMP = 1;
+	public static final int STAND = 0, WALK = 1, JUMP = 2, TURN = 3;
 
 	public Entity(Rectangle2D bounds) {
 		this(bounds, null);
@@ -37,11 +41,12 @@ public class Entity {
 		momentum = new Vector();
 		movement = new Vector();
 		usePhysics = true;
+		facingRight = true;
 		timeScale = 1;
 		this.sprite = sprite;
 		timers = new LinkedList<>();
 		entities = new LinkedList<>();
-		ActionTimer spriteTimer = new ActionTimer(5, new Action() {
+		ActionTimer spriteTimer = new ActionTimer(3, new Action() {
 			public void perform() {
 				if (Entity.this.sprite != null) {
 					Entity.this.sprite.update();
@@ -124,6 +129,22 @@ public class Entity {
 		for (Entity e : entities) {
 			e.update();
 		}
+		
+		if (movement.dx == 0 && grounded) {
+			playAnimation(STAND);
+		} else if (movement.dx != 0 && grounded && sprite.isDone()) {
+			playAnimation(WALK);
+		}
+		if (movement.dx > 0) {
+			if (!facingRight) {
+				facingRight = true;
+			}
+		}
+		if (movement.dx < 0) {
+			if (facingRight) {
+				facingRight = false;
+			}
+		}
 	}
 
 	/**
@@ -134,7 +155,7 @@ public class Entity {
 	public void updateLocation() {
 		// Gravity
 		if (usePhysics) {
-			momentum.dy += GRAVITY * timeScale;
+			momentum.dy += GRAVITY;
 		}
 
 		// Movement
@@ -198,7 +219,16 @@ public class Entity {
 			g.setColor(new Color(0, 0, 0));
 			g.drawRect(dx, dy, w, h);
 		} else {
-			g.drawImage(sprite.getCurrentFrame(), dx, dy, null);
+			if (facingRight) {
+				g.drawImage(sprite.getCurrentFrame(), dx, dy, null);
+			} else {
+				System.out.println("left");
+				BufferedImage image = Util.toBufferedImage(sprite.getCurrentFrame());
+				AffineTransform at = AffineTransform.getScaleInstance(-1, 1);
+				at.translate(-image.getWidth(), 0);
+				AffineTransformOp op = new AffineTransformOp(at, null);
+				g.drawImage(op.filter(image, null), dx, dy, null);
+			}
 		}
 	}
 
@@ -207,7 +237,7 @@ public class Entity {
 			momentum.dy -= 20 * timeScale;
 			jumps++;
 		}
-		// System.out.println(jumps);
+		playAnimation(JUMP);
 	}
 
 	public void resetJump() {
@@ -345,5 +375,9 @@ public class Entity {
 		Point2D hardPoint = sprite.getHardPoint(point);
 		return new Point2D.Double(location.getX() + hardPoint.getX(),
 				location.getY() + hardPoint.getY());
+	}
+	
+	public boolean isGrounded() {
+		return grounded;
 	}
 }

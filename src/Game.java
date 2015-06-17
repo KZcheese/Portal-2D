@@ -18,7 +18,7 @@ public class Game extends JFrame {
 	private Controller controller;
 	private Renderer view;
 	public int targetFrameRate = 60;
-	private static final int TARGET_FRAME_DURATION = 0;
+	private static final int TARGET_FRAME_DURATION = 16;
 	private boolean showDebug;
 	private boolean fullScreen;
 	private Rectangle fullScreenBounds;
@@ -44,7 +44,6 @@ public class Game extends JFrame {
 			timer = new Timer(TARGET_FRAME_DURATION, new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (true) {
-						System.out.println("Map updating");
 						stop = System.nanoTime();
 
 						if (!map.hasAnyLivingPlayer()) {
@@ -123,45 +122,47 @@ public class Game extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		System.out.println("Hi");
-		map = new Level(new Rectangle2D.Double(0, 0, 16 * Block.SIZE,
-				12 * Block.SIZE));
+		map = new Level(new Rectangle2D.Double(0, 0, 20 * Block.SIZE,
+				14 * Block.SIZE));
+		map.setBackground(Util.readImage("background_panel.png"));
 		view = new Renderer(map);
 
 		final Entity entity = new Player();
+		entity.setLocation(128, 128);
 		controller = new Controller(entity);
 		addKeyListener(controller);
 
-		for (int i = 0; i < 16; i++) {
-			if (i == 8) {
-				map.addEntity(new Goal(i, 11));
-			} else if (i == 0) {
-				map.addEntity(new CheckPoint(i, 11));
-			} else {
-				map.addEntity(new SolidBlock(i, 11));
+		int var = 0;
+		
+		for (int i = 0; i < 20; i++) {
+			var = i % 2;
+			map.addEntity(new FrameBlock(i, 13, var));
+			map.addEntity(new FrameBlock(i, 0, var));
+			
+			if (1 < i && i < 18) {
+				map.addEntity(new SolidBlock(i, 12));
+				map.addEntity(new SolidBlock(i, 1));
 			}
 		}
-
-		map.addEntity(new SolidBlock(5, 9));
-		map.addEntity(new SolidBlock(4, 9));
-
-		for (int i = 7; i < 14; i++) {
-			map.addEntity(new SolidBlock(i, 8));
+		
+		for (int i = 0; i < 14; i++) {
+			var = i % 2;
+			map.addEntity(new FrameBlock(0, i, var));
+			map.addEntity(new FrameBlock(19, i, var));
+			
+			if (2 < i && i < 11) {
+				map.addEntity(new SolidBlock(1, i));
+				map.addEntity(new SolidBlock(18, i));	
+			} else {
+				map.addEntity(new FrameBlock(1, i));
+				map.addEntity(new FrameBlock(18, i));
+			}
 		}
-
-		map.addEntity(new Spike(3, 10));
-		map.addEntity(new Spike(6, 10));
-		map.addEntity(new Spike(8, 7));
-		map.addEntity(new Spike(9, 7));
-		map.addEntity(new Spike(13, 7));
-
-		map.addEntity(new SolidBlock(11, 7));
-		map.addEntity(new SolidBlock(11, 6));
-		map.addEntity(new CheckPoint(11, 5));
 
 		GameTimer timer = new GameTimer();
 
 		// frame.setPreferredSize(new Dimension(640, 480));
-		view.setPreferredSize(new Dimension(16 * Block.SIZE, 12 * Block.SIZE));
+		view.setPreferredSize(new Dimension(20 * Block.SIZE, 14 * Block.SIZE));
 		getContentPane().add(view);
 		map.addEntity(entity);
 
