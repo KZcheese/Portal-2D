@@ -51,15 +51,12 @@ public class Controller implements KeyListener {
 	public void update() {
 		if (keysDown[UP]) {
 			unit.jump();
-			unit.playAnimation(Entity.JUMP);
 		}
 		if (keysDown[LEFT]) {
 			unit.applyMovement(Math.PI, 2);
-			unit.playAnimation(Entity.STAND);
 		}
 		if (keysDown[RIGHT]) {
 			unit.applyMovement(0, 2);
-			unit.playAnimation(Entity.STAND);
 		}
 	}
 }
