@@ -1,6 +1,6 @@
 import java.awt.image.BufferedImage;
 
-public abstract class Turret extends Entity {
+public class Turret extends Entity {
 	private Unit host;
 	private Weapon weapon;
 	private int attachment;

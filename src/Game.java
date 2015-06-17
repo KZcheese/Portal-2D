@@ -18,7 +18,7 @@ public class Game extends JFrame {
 	private Controller controller;
 	private Renderer view;
 	public int targetFrameRate = 60;
-	private static final int TARGET_FRAME_DURATION = 0;
+	private static final int TARGET_FRAME_DURATION = 16;
 	private boolean showDebug;
 	private boolean fullScreen;
 	private Rectangle fullScreenBounds;
