@@ -128,7 +128,7 @@ public class Game extends JFrame {
 		view = new Renderer(map);
 
 		final Entity entity = new Player();
-		entity.setLocation(128, 128);
+		entity.setLocation(192, 192);
 		controller = new Controller(entity);
 		addKeyListener(controller);
 

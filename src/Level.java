@@ -96,7 +96,7 @@ public class Level {
 
 							// System.out.println("hd:" + bounds2.getWidth());
 							// System.out.println("vd:" + bounds2.getHeight());
-							if (hd / (bounds2.getWidth() * bounds1.getWidth() + 0.4) >= vd
+							if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
 									/ (bounds2.getHeight() * bounds1.getHeight())) {
 								if (bounds1.getCenterX() < bounds2.getCenterX()) {
 									e.move(-1
