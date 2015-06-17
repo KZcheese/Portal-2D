@@ -161,7 +161,7 @@ public class Entity {
 		// Movement
 		applyFriction(FRICTION);
 
-		move(2*momentum.dx, 2*movement.dy);
+		move(momentum.dx + movement.dx, momentum.dy + movement.dy);
 	}
 
 	public void applyFriction(double friction) {
