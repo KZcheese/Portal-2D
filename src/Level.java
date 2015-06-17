@@ -69,6 +69,7 @@ public class Level {
 			e.updateEntity();
 			e.setGrounded(false);
 			if (e.physicsEnabled()) {
+<<<<<<< HEAD
 				Rectangle2D bounds1 = e.getBounds();
 				for (Entity e2 : entities) {
 					if (e2 != e) {
@@ -181,6 +182,102 @@ public class Level {
 					}
 					e.setLocation(eX, bottomBound - e.getBounds().getHeight());
 					e.resetJump();
+=======
+				for (int i = 0; i < 1; i++) {
+//					System.out.println(i);
+					for (Entity e2 : entities) {
+						if (e2 != e) {	
+							applyCollision(e, e2);
+						}
+					}
+				}
+				applyLevelCollision(e);
+			}
+		}
+	}
+
+	public void applyCollision(Entity e1, Entity e2) {
+		Rectangle2D bounds1 = e1.getBounds();
+		Rectangle2D bounds2 = e2.getBounds();
+		if (bounds1.intersects(bounds2)) {
+			// Calculate the vertical and horizontal
+			// length between the centers of rectangles
+
+			double hd = Math.abs(bounds1.getCenterX() - bounds2.getCenterX());
+			double vd = Math.abs(bounds1.getCenterY() - bounds2.getCenterY());
+			// System.out.println("1X: " +
+			// bounds1.getCenterX());
+			// System.out.println("1Y:" + bounds1.getCenterY());
+			// System.out.println("2X: " +
+			// bounds2.getCenterX());
+			// System.out.println("2Y: " +
+			// bounds2.getCenterY());
+			// System.out.println("hd: " + hd);
+			// System.out.println("vd: " + vd);
+
+			// Now compare them to know the side of
+			// collision
+
+			// System.out.println("hd:" + bounds2.getWidth());
+			// System.out.println("vd:" + bounds2.getHeight());
+			if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
+					/ (bounds2.getHeight() * bounds1.getHeight())) {
+				if (bounds1.getCenterX() < bounds2.getCenterX()) {
+					if (e1.getVelX() > 0
+//							&& bounds1.getMaxX() == bounds2.getMinX()
+							) {
+						e1.resetMovementAcceleration();
+						e2.collideLeft(e1);
+						System.out.println("hit on right");
+					} else {
+						// Fell off
+					}
+					e1.move(-1
+							* Math.abs(bounds1.getMaxX() - bounds2.getMinX()),
+							0.0);
+				}
+				// Collision on right side of player
+				else {
+					if (e1.getVelX() < 0
+//							&& bounds1.getMinX() == bounds2.getMaxX()
+							) {
+						e1.resetMovementAcceleration();
+System.out.println("hit on left");
+						e2.collideRight(e1);
+					} else {
+						// Fell off
+					}
+					e1.move(Math.abs(bounds1.getMinX() - bounds2.getMaxX()),
+						0.0);
+				}
+				// Collision on left side of player
+			} else {
+				if (bounds1.getCenterY() < bounds2.getCenterY()) {
+					if (e1.getVelY() > 0
+//							&& bounds1.getMaxY() == bounds2.getMinY()
+							) {
+						e1.resetGravity();
+						e2.collideTop(e1);
+						e1.resetJump();
+					}
+					e1.move(0.0,
+							-1
+									* Math.abs(bounds1.getMaxY()
+											- bounds2.getMinY()));
+
+					// Collision on bottom side of player
+				} else {
+					if (e1.getVelY() < 0
+//							&& bounds1.getMinY() == bounds2.getMaxY()
+							) {
+						e1.resetGravity();
+						e2.collideBottom(e1);
+					}
+					e1.move(0.0,
+							Math.abs(bounds1.getMinY() - bounds2.getMaxY()));
+
+					// Collision on top side of player
+>>>>>>> origin/master
 				}
 			}
 		}
