@@ -242,6 +242,7 @@ public class Entity {
 			momentum.dy -= 20;
 			jumps++;
 		}
+//		else momentum.dy = 20;
 		playAnimation(JUMP);
 	}
 

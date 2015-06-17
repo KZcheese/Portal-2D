@@ -91,6 +91,8 @@ public class Level {
 
 			double hd = Math.abs(bounds1.getCenterX() - bounds2.getCenterX());
 			double vd = Math.abs(bounds1.getCenterY() - bounds2.getCenterY());
+			double hdc = hd / bounds1.getWidth() / bounds2.getWidth();
+			double vdc = vd / bounds1.getHeight() / bounds2.getHeight();
 			// System.out.println("1X: " +
 			// bounds1.getCenterX());
 			// System.out.println("1Y:" + bounds1.getCenterY());
@@ -98,16 +100,17 @@ public class Level {
 			// bounds2.getCenterX());
 			// System.out.println("2Y: " +
 			// bounds2.getCenterY());
-			// System.out.println("hd: " + hd);
-			// System.out.println("vd: " + vd);
 
 			// Now compare them to know the side of
 			// collision
 
 			// System.out.println("hd:" + bounds2.getWidth());
 			// System.out.println("vd:" + bounds2.getHeight());
-			if (hd / (bounds2.getWidth() * bounds1.getWidth()) >= vd
-					/ (bounds2.getHeight() * bounds1.getHeight())) {
+			if (hdc - 0.00209 >= vdc) {
+				// System.out.println("hd: " + hd);
+				// System.out.println("vd: " + vd);
+//				System.out.println("hdc: " + hdc);
+//				System.out.println("vdc: " + vdc);
 				if (bounds1.getCenterX() < bounds2.getCenterX()) {
 					if (e1.getVelX() > 0
 					// && bounds1.getMaxX() == bounds2.getMinX()

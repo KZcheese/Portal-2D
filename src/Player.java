@@ -8,7 +8,7 @@ public class Player extends Unit {
 		SpriteSheet.Animation a0 = new SpriteSheet.Animation(4, 4, false), a1 = new SpriteSheet.Animation(
 				1, 4, true), a2 = new SpriteSheet.Animation(5, 6, false, 0.5), a3 = new SpriteSheet.Animation(
 				13, 13, false, 0.7);
-		System.out.println(a1);
+//		System.out.println(a1);
 		sprite.playAnimation(a1);
 		setSprite(sprite);
 		setAnimations(new SpriteSheet.Animation[] { a0, a1, a2, a3 });
