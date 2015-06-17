@@ -14,6 +14,7 @@ public class Player extends Unit {
 		sprite.playAnimation(a1);
 		setSprite(sprite);
 		setAnimations(new SpriteSheet.Animation[] { a0, a1, a2, a3 });
+		setSpeed(8);
 	}
 
 	public void win() {

@@ -1,7 +1,7 @@
 public class PortalGun extends Weapon {
 
-	public PortalGun(int fireDelay) {
-		super(fireDelay);
+	public PortalGun() {
+		super(500);
 	}
 
 	public void fire() {

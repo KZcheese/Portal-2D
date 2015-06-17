@@ -103,7 +103,6 @@ public class Level {
 											* Math.abs(bounds1.getMaxX()
 													- bounds2.getMinX()), 0.0);
 									if (e.getVelX() > 0) {
-										System.out.println("Hit left");
 										e.resetMovementAcceleration();
 										e2.collideLeft(e);
 									} else {
