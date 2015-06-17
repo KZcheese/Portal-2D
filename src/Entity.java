@@ -18,7 +18,7 @@ public class Entity {
 	private int jumps;
 	private SpriteSheet sprite;
 
-	private double topSpeed, timeScale;
+	private double topSpeed, timeScale, angle;
 	private Vector momentum, movement;
 
 	public static final double GRAVITY = 0.8, FRICTION = 0.4, JUMP_FORCE = 18;
@@ -37,7 +37,6 @@ public class Entity {
 	public Entity(Rectangle2D bounds, SpriteSheet sprite) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
-		topSpeed = 8;
 		momentum = new Vector();
 		movement = new Vector();
 		usePhysics = true;
@@ -46,7 +45,7 @@ public class Entity {
 		this.sprite = sprite;
 		timers = new LinkedList<>();
 		entities = new LinkedList<>();
-		ActionTimer spriteTimer = new ActionTimer(3, new Action() {
+		ActionTimer spriteTimer = new ActionTimer(2, new Action() {
 			public void perform() {
 				if (Entity.this.sprite != null) {
 					Entity.this.sprite.update();
@@ -83,6 +82,12 @@ public class Entity {
 
 	public boolean intersects(Entity e) {
 		return bounds.intersects(e.bounds);
+	}
+
+	public void setBounds(Rectangle2D bounds) {
+		this.bounds = bounds;
+		bounds.setFrame(location.getX(), location.getY(), bounds.getWidth(),
+				bounds.getHeight());
 	}
 
 	public Rectangle2D getBounds() {
@@ -129,7 +134,7 @@ public class Entity {
 		for (Entity e : entities) {
 			e.update();
 		}
-		
+
 		if (movement.dx == 0 && grounded) {
 			playAnimation(STAND);
 		} else if (movement.dx != 0 && grounded && sprite.isDone()) {
@@ -155,13 +160,14 @@ public class Entity {
 	public void updateLocation() {
 		// Gravity
 		if (usePhysics) {
-			momentum.dy += GRAVITY;
+			momentum.dy += GRAVITY * timeScale;
 		}
 
 		// Movement
 		applyFriction(FRICTION);
 
-		move(momentum.dx + movement.dx, momentum.dy + movement.dy);
+		move((momentum.dx + movement.dx) * timeScale,
+				(momentum.dy + movement.dy) * timeScale);
 	}
 
 	public void applyFriction(double friction) {
@@ -222,8 +228,8 @@ public class Entity {
 			if (facingRight) {
 				g.drawImage(sprite.getCurrentFrame(), dx, dy, null);
 			} else {
-				System.out.println("left");
-				BufferedImage image = Util.toBufferedImage(sprite.getCurrentFrame());
+				BufferedImage image = Util.toBufferedImage(sprite
+						.getCurrentFrame());
 				AffineTransform at = AffineTransform.getScaleInstance(-1, 1);
 				at.translate(-image.getWidth(), 0);
 				AffineTransformOp op = new AffineTransformOp(at, null);
@@ -234,7 +240,7 @@ public class Entity {
 
 	public void jump() {
 		if (jumps < 1) {
-			momentum.dy -= 20 * timeScale;
+			momentum.dy -= 20;
 			jumps++;
 		}
 		playAnimation(JUMP);
@@ -320,13 +326,13 @@ public class Entity {
 
 	public void applyMovement(double angle, double magnitude) {
 		if (grounded) {
-			movement.apply(angle, magnitude);
+			movement.apply(angle, magnitude * timeScale);
 			double speed = topSpeed * timeScale;
 			if (speed < Math.abs(movement.dx)) {
 				movement.dx = Math.signum(movement.dx) * speed;
 			}
 		} else {
-			movement.apply(angle, magnitude);
+			movement.apply(angle, magnitude * timeScale);
 			double speed = topSpeed * timeScale;
 			if (speed < Math.abs(movement.dx)) {
 				movement.dx = Math.signum(movement.dx) * speed;
@@ -376,8 +382,25 @@ public class Entity {
 		return new Point2D.Double(location.getX() + hardPoint.getX(),
 				location.getY() + hardPoint.getY());
 	}
-	
+
 	public boolean isGrounded() {
 		return grounded;
+	}
+
+	public void setSpeed(double speed) {
+		this.topSpeed = speed;
+	}
+	
+	public void setAngle(double angle) {
+		this.angle = angle;
+	}
+	
+	public void rotateTurrets(Point2D point) {
+		for (Entity e : entities) {
+			if (e instanceof Turret) {
+				e.setAngle(0);
+				// Change
+			}
+		}
 	}
 }
