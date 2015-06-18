@@ -17,23 +17,26 @@ public class Renderer extends JComponent {
 	}
 
 	public void paintComponent(Graphics g) {
-		 Rectangle2D bounds = level.getBounds();
-		 BufferedImage canvas = new BufferedImage((int) bounds.getWidth(),
-		 (int) bounds.getHeight(), BufferedImage.TYPE_INT_RGB);
-		 level.render(canvas.getGraphics());
-//		level.render(g);
+		Rectangle2D bounds = level.getBounds();
+		BufferedImage canvas = new BufferedImage((int) bounds.getWidth(),
+				(int) bounds.getHeight(), BufferedImage.TYPE_INT_RGB);
+		level.render(canvas.getGraphics());
+		// level.render(g);
 		//
-		 double scaleFactor;
-		  double aspectRatio = (canvas.getWidth() / canvas.getHeight());
-		  if (getHeight() * aspectRatio > getWidth())
-		  scaleFactor = (double) getWidth() / canvas.getWidth();
-		  else
-		 scaleFactor = (double) getHeight() / canvas.getHeight();
-		 Image scaled = canvas.getScaledInstance(
-		 (int) ((double)canvas.getWidth() * scaleFactor),
-		 (int) ((double)canvas.getHeight() * scaleFactor),
-		 BufferedImage.SCALE_FAST);
-		 g.drawImage(scaled, 0, 0, this);
+		double scaleFactor;
+		double canvasAspectRatio = ((double) canvas.getWidth() / canvas
+				.getHeight());
+		double windowAspectRatio = ((double) this.getWidth() / this.getHeight());
+		if (canvasAspectRatio > windowAspectRatio)
+			scaleFactor = (double) getWidth() / canvas.getWidth();
+		else
+			scaleFactor = (double) getHeight() / canvas.getHeight();
+		Image scaled = canvas.getScaledInstance(
+				(int) ((double) canvas.getWidth() * scaleFactor),
+				(int) ((double) canvas.getHeight() * scaleFactor),
+				BufferedImage.SCALE_FAST);
+		g.drawImage(scaled, this.getWidth() / 2 - scaled.getWidth(null) / 2,
+				this.getHeight() / 2 - scaled.getHeight(null) / 2, this);
 
 		// Experimental High Quality Scaling. Broken and probably extremely
 		// inefficient.
