@@ -1,4 +1,8 @@
-
+/**
+ * A generic solid block with a static sprite.
+ * @author Kevin Zhan
+ * @author Benjamin Hetherington
+ */
 public class SolidBlock extends Block {
 	public SolidBlock(int x, int y) {
 		super(x, y);

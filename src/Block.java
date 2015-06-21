@@ -1,6 +1,10 @@
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-
+/**
+ * Creates a solid, generic block of size 64x64.
+ * @author Kevin Zhan
+ * @author Benjamin Hetherington
+ */
 public class Block extends Entity {
 	public static final int SIZE = 64;
 	public static final int BOTTOM = 0, TOP = 1, LEFT = 2, RIGHT = 3;
@@ -14,6 +18,11 @@ public class Block extends Entity {
 		this(0, 0);
 	}
 
+	/**
+	 * Teleports e to a specified side of the block.
+	 * @param e
+	 * @param side
+	 */
 	public void moveToSide(Entity e, int side) {
 		Rectangle2D bounds1 = getBounds(), bounds2 = e.getBounds();
 		switch (side) {

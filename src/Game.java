@@ -9,6 +9,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * Runs the game. Currently only creates a new level and player and runs them.
+ * TODO: Create a UI that will lead to a level select, level editor, options,
+ * etc.
+ * 
+ * @author Kevin Zhan
+ * @author Benjamin Hetherington
+ */
 public class Game extends JFrame {
 	private static final long serialVersionUID = 8042357299242990677L;
 	private Level map;
@@ -33,6 +41,14 @@ public class Game extends JFrame {
 
 	private Timer spawnTimer;
 
+	/**
+	 * Runs the game, and adjusts timescale relative to the framerate in order
+	 * to create a consistent pace on devices with different levels of
+	 * performance.
+	 * 
+	 * @author Kevin Zhan
+	 *
+	 */
 	private class GameTimer {
 		private Timer timer;
 		private long start, stop;

@@ -10,6 +10,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * Stores a game level in the form of a list of entities, a set of bounds, and a
+ * point dictating the location of the camera. TODO: Implement camera system.
+ * 
+ * @author Kevin Zhan
+ * @author Benjamin Hetherington
+ */
 public class Level {
 	private List<Entity> entities;
 	private Point corner;
@@ -29,6 +36,11 @@ public class Level {
 		this(new Rectangle2D.Double());
 	}
 
+	/**
+	 * Bounds is the bounds of the level.
+	 * 
+	 * @param bounds
+	 */
 	public Level(Rectangle2D bounds) {
 		this.entities = new LinkedList<>();
 		addQueue = new LinkedList<>();
@@ -37,6 +49,11 @@ public class Level {
 		this.levelBounds = bounds;
 	}
 
+	/**
+	 * Sets the checkpoint that the player will respawn at when it dies.
+	 * 
+	 * @param p
+	 */
 	public void setLastCheckPoint(CheckPoint p) {
 		this.lastCheckPoint = p;
 	}
@@ -45,12 +62,21 @@ public class Level {
 		return lastCheckPoint;
 	}
 
+	/**
+	 * Tiles background repeatedly as the level background.
+	 * 
+	 * @param background
+	 */
 	public void setBackground(BufferedImage background) {
 		backgroundTile = background;
 		texture = new TexturePaint(backgroundTile, new Rectangle2D.Double(0, 0,
 				background.getWidth(), background.getHeight()));
 	}
 
+	/**
+	 * Updates the location of each entity in the level based on collision. Only
+	 * checks collision on Entities that are effected by physics.
+	 */
 	public void update() {
 		Entity entity;
 		while (!addQueue.isEmpty()) {
@@ -82,6 +108,16 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Checks if e1 is intersecting e2, and reacts accordingly be repositioning
+	 * e1 until they are no longer overlapping. TODO: Use BigDecimal for more
+	 * precise math, because double's errors cause problems with corners. Also
+	 * implement penetration collision to keep extremely high speed objects from
+	 * passing through eachother.
+	 * 
+	 * @param e1
+	 * @param e2
+	 */
 	public void applyCollision(Entity e1, Entity e2) {
 		Rectangle2D bounds1 = e1.getBounds();
 		Rectangle2D bounds2 = e2.getBounds();
@@ -109,8 +145,8 @@ public class Level {
 			if (hdc - 0.002095 >= vdc) {
 				// System.out.println("hd: " + hd);
 				// System.out.println("vd: " + vd);
-//				System.out.println("hdc: " + hdc);
-//				System.out.println("vdc: " + vdc);
+				// System.out.println("hdc: " + hdc);
+				// System.out.println("vdc: " + vdc);
 				if (bounds1.getCenterX() < bounds2.getCenterX()) {
 					if (e1.getVelX() > 0
 					// && bounds1.getMaxX() == bounds2.getMinX()
@@ -171,6 +207,12 @@ public class Level {
 		}
 	}
 
+	/**
+	 * Compares the location of e to the bounds of the level, and applies
+	 * collision and repositions e if it is out of the level bounds.
+	 * 
+	 * @param e
+	 */
 	public void applyLevelCollision(Entity e) {
 		double leftBound = levelBounds.getMinX();
 		double rightBound = levelBounds.getMaxX();
@@ -206,7 +248,10 @@ public class Level {
 			e.resetJump();
 		}
 	}
-
+/**
+ * Draws the background and renders all entities in the level.
+ * @param g
+ */
 	public void render(Graphics g) {
 		if (texture != null) {
 			Graphics2D g2d = (Graphics2D) g;
@@ -243,15 +288,22 @@ public class Level {
 	public List<Entity> getEntities() {
 		return entities;
 	}
-
+/**
+ * Reacts to the player "winning" or beating a level. TODO: Have this method actually do something.
+ */
 	public void win() {
 		System.out.println("You win!");
 	}
-
+	/**
+	 * Reacts to the player "losing" or getting a game over (likely from loosing too many lives). TODO: Have this method actually do something.
+	 */
 	public void lose() {
 		System.out.println("You lose.");
 	}
-
+/**
+ * Checks to see a player exists in the level.
+ * @return Whether the play exists.
+ */
 	public boolean hasAnyLivingPlayer() {
 		for (Entity e : entities) {
 			if (e instanceof Player) {
@@ -261,6 +313,10 @@ public class Level {
 		return false;
 	}
 
+	/**
+	 * Sets the timeScale, which effects how fast everything moves.
+	 * @param timeScale
+	 */
 	public void setTimeScale(double timeScale) {
 		this.timeScale = timeScale;
 	}

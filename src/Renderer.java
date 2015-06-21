@@ -8,6 +8,13 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
+/**
+ * Displays the game.
+ * 
+ * @author Kevin Zhan
+ * @author Benjamin Hetherington
+ *
+ */
 @SuppressWarnings({ "serial" })
 public class Renderer extends JComponent {
 	public Level level;
@@ -16,6 +23,10 @@ public class Renderer extends JComponent {
 		this.level = level;
 	}
 
+	/**
+	 * Renders the game onto a BufferedImage and scales it to window size while
+	 * preserving aspect ratio. Displays the scaled image.
+	 */
 	public void paintComponent(Graphics g) {
 		Rectangle2D bounds = level.getBounds();
 		BufferedImage canvas = new BufferedImage((int) bounds.getWidth(),
