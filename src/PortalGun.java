@@ -14,4 +14,7 @@ public class PortalGun extends Weapon {
 
 	}
 
+	public void upgrade() {
+	}
+
 }

@@ -33,6 +33,12 @@ public class Entity {
 		this(bounds, null);
 	}
 
+	/**
+	 * Constructs an entity with the specified bounds and sprite sheet.
+	 * 
+	 * @param bounds
+	 * @param sprite
+	 */
 	public Entity(Rectangle2D bounds, SpriteSheet sprite) {
 		this.bounds = bounds;
 		location = new Point2D.Double(bounds.getMinX(), bounds.getMinY());
@@ -55,52 +61,113 @@ public class Entity {
 		spriteTimer.start();
 	}
 
+	/**
+	 * Returns the entity's sprite sheet.
+	 * 
+	 * @return
+	 */
 	public SpriteSheet getSprite() {
 		return sprite;
 	}
 
+	/**
+	 * Sets the entity's sprite sheet to the specified sprite.
+	 * 
+	 * @param sprite
+	 */
 	public void setSprite(SpriteSheet sprite) {
 		this.sprite = sprite;
 	}
 
+	/**
+	 * Default constructor. The entity has a null bounds, and null 
+	 * sprite sheet.
+	 */
 	public Entity() {
 		this(null);
 	}
 
+	/**
+	 * Sets the location of the entity to the specified location.
+	 * 
+	 * @param location
+	 */
 	public void setLocation(Point2D location) {
 		this.location = location;
 	}
 
+	/**
+	 * Returns the entity's location.
+	 * 
+	 * @return
+	 */
 	public Point2D getLocation() {
 		return location;
 	}
 
+	/**
+	 * Sets the entity's level to the specified level.
+	 * 
+	 * @param l
+	 */
 	public void setLevel(Level l) {
 		level = l;
 	}
 
+	/**
+	 * Returns true if the entity's bounds intersects the specified 
+	 * entity's bounds.
+	 * 
+	 * @param e
+	 * @return
+	 */
 	public boolean intersects(Entity e) {
 		return bounds.intersects(e.bounds);
 	}
 
+	/**
+	 * Sets the entity's bounds to the specified rectangle.
+	 * 
+	 * @param bounds
+	 */
 	public void setBounds(Rectangle2D bounds) {
 		this.bounds = bounds;
 		bounds.setFrame(location.getX(), location.getY(), bounds.getWidth(),
 				bounds.getHeight());
 	}
 
+	/**
+	 * Returns the entity's bounds.
+	 * 
+	 * @return
+	 */
 	public Rectangle2D getBounds() {
 		return bounds;
 	}
 
+	/**
+	 * Adds a timer to the entity.
+	 * 
+	 * @param t
+	 */
 	public void addTimer(ActionTimer t) {
 		timers.add(t);
 	}
 
+	/**
+	 * Removes a timer from the entity.
+	 * 
+	 * @param t
+	 */
 	public void removeTimer(ActionTimer t) {
 		timers.remove(t);
 	}
 
+	/**
+	 * Adds the specified entity to the entity.
+	 * 
+	 * @param e
+	 */
 	public void addEntity(Entity e) {
 		entities.add(e);
 		if (level != null) {
@@ -108,6 +175,11 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Removes the specified entity from the entity.
+	 * 
+	 * @param e
+	 */
 	public void removeEntity(Entity e) {
 		entities.remove(e);
 		if (level != null) {
@@ -124,6 +196,9 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Updates the entity.
+	 */
 	public void update() {
 		updateLocation();
 		for (ActionTimer t : timers) {
@@ -162,13 +237,19 @@ public class Entity {
 			momentum.dy += GRAVITY * timeScale;
 		}
 
-		// Movement
+		// Friction
 		applyFriction(FRICTION);
 
+		// Movement
 		move((momentum.dx + movement.dx) * timeScale,
 				(momentum.dy + movement.dy) * timeScale);
 	}
 
+	/**
+	 * Reduces an entity's momentum by a specified amount.
+	 * 
+	 * @param friction
+	 */
 	public void applyFriction(double friction) {
 		double temp1 = momentum.dx;
 		momentum.dx -= Math.signum(momentum.dx) * friction * timeScale;
@@ -186,9 +267,7 @@ public class Entity {
 	 * Translates the entity a specified X and Y distance.
 	 * 
 	 * @param dx
-	 *            X distance to translate
 	 * @param dy
-	 *            Y distance to translate
 	 */
 	public void move(double dx, double dy) {
 		location.setLocation(location.getX() + dx, location.getY() + dy);
@@ -200,19 +279,25 @@ public class Entity {
 	 * Sets the X and Y coordinates of the entity to the specified coordinates.
 	 * 
 	 * @param x
-	 *            X coordinate
 	 * @param x
-	 *            Y coordinate
 	 */
 	public void setLocation(double x, double y) {
 		move(x - location.getX(), y - location.getY());
 	}
 
+	/**
+	 * Resets the vertical velocity component of the entity to zero.
+	 */
 	public void resetGravity() {
 		momentum.dy = 0;
 		movement.dy = 0;
 	}
 
+	/**
+	 * Renders the entity.
+	 * 
+	 * @param g
+	 */
 	public void render(Graphics g) {
 		Point corner = getLevel().getCorner();
 		int dx = (int) (location.getX() - corner.x), dy = (int) (location
@@ -237,6 +322,9 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Applies a small vertical force to the entity.
+	 */
 	public void jump() {
 		if (jumps < 1) {
 			momentum.dy -= 20;
@@ -246,37 +334,81 @@ public class Entity {
 		playAnimation(JUMP);
 	}
 
+	/**
+	 * Resets the number of jumps performed to zero.
+	 */
 	public void resetJump() {
 		jumps = 0;
 	}
 
+	/**
+	 * Returns whether or not the entity's physics mode is enabled.
+	 * 
+	 * @return
+	 */
 	public boolean physicsEnabled() {
 		return usePhysics;
 	}
 
+	/**
+	 * Enables or disables physics for the entity.
+	 * 
+	 * @param physics
+	 */
 	public void enablePhysics(boolean physics) {
 		usePhysics = physics;
 	}
 
+	/**
+	 * Sets the entity's time scale.
+	 * 
+	 * @param timeScale
+	 */
 	public void setTimeScale(double timeScale) {
 		this.timeScale = timeScale;
 	}
 
+	/**
+	 * Returns the entity's time scale.
+	 * 
+	 * @return
+	 */
 	public double getTimeScale() {
 		return timeScale;
 	}
 
+	/**
+	 * Resets the horizontal velocity component of the entity to zero.
+	 */
 	public void resetMovementAcceleration() {
 		movement.dx = 0;
 		momentum.dx = 0;
 	}
 
+	/**
+	 * This method is performed when an entity collides with its left 
+	 * side.
+	 * 
+	 * @param e
+	 */
 	public void collideLeft(Entity e) {
 	}
 
+	/**
+	 * This method is performed when an entity collides with its right 
+	 * side.
+	 * 
+	 * @param e
+	 */
 	public void collideRight(Entity e) {
 	}
 
+	/**
+	 * This method is performed when an entity collides with its top 
+	 * side.
+	 * 
+	 * @param e
+	 */
 	public void collideTop(Entity e) {
 		double signum = Math.signum(e.momentum.dx);
 		double friction = signum * 1;
@@ -287,29 +419,62 @@ public class Entity {
 		e.setGrounded(true);
 	}
 
+	/**
+	 * This method is performed when an entity collides with its bottom 
+	 * side.
+	 * 
+	 * @param e
+	 */
 	public void collideBottom(Entity e) {
 	}
 
+	/**
+	 * Kills the entity.
+	 */
 	public void kill() {
 		level.removeEntity(this);
 	}
 
+	/**
+	 * Returns the horizontal component of the velocity.
+	 * 
+	 * @return
+	 */
 	public double getVelX() {
 		return momentum.dx + movement.dx;
 	}
 
+	/**
+	 * Returns the vertical component of the velocity.
+	 * 
+	 * @return
+	 */
 	public double getVelY() {
-		return momentum.dy;
+		return momentum.dy + movement.dy;
 	}
 
+	/**
+	 * Returns the entity's level.
+	 * 
+	 * @return
+	 */
 	public Level getLevel() {
 		return level;
 	}
 
+	/**
+	 * Applies a force to the entity's momentum velocity.
+	 * 
+	 * @param v
+	 */
 	public void applyForce(Vector v) {
 		momentum.add(v);
 	}
 
+	/**
+	 * Applies a force to the entity's movement velocity.
+	 * @param v
+	 */
 	public void applyMovement(Vector v) {
 		if (grounded) {
 			movement.add(v);
@@ -320,10 +485,22 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Applies a force to the entity's momentum velocity.
+	 * 
+	 * @param angle
+	 * @param magnitude
+	 */
 	public void applyForce(double angle, double magnitude) {
 		momentum.apply(angle, magnitude);
 	}
 
+	/**
+	 * Applies a force to the entity's movement velocity.
+	 * 
+	 * @param angle
+	 * @param magnitude
+	 */
 	public void applyMovement(double angle, double magnitude) {
 		if (grounded) {
 			movement.apply(angle, magnitude * timeScale);
@@ -340,18 +517,37 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Returns the angle of the entity's momentum.
+	 * @return
+	 */
 	public double getAngle() {
 		return momentum.getAngle();
 	}
 
+	/**
+	 * Sets the grounded state of the entity.
+	 * 
+	 * @param grounded
+	 */
 	public void setGrounded(boolean grounded) {
 		this.grounded = grounded;
 	}
 
+	/**
+	 * Sets the animation set of the entity.
+	 * 
+	 * @param anims
+	 */
 	public void setAnimations(SpriteSheet.Animation[] anims) {
 		this.anims = anims;
 	}
 
+	/**
+	 * Forces the entity's sprite to play the specified animation.
+	 * 
+	 * @param anim
+	 */
 	public void playAnimation(int anim) {
 		if (sprite != null) {
 			if (-1 < anim && anim < anims.length) {
@@ -360,20 +556,41 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Returns the entity's momentum vector.
+	 * 
+	 * @return
+	 */
 	public Vector getMomentum() {
 		return momentum;
 	}
 
+	/**
+	 * Returns the entity's net momentum vector.
+	 * 
+	 * @return
+	 */
 	public Vector getNetMomentum() {
 		Vector v = new Vector(momentum.dx, momentum.dy);
 		v.add(movement);
 		return v;
 	}
 
+	/**
+	 * Returns the list of entity's attached to the entity.
+	 * 
+	 * @return
+	 */
 	public List<Entity> getEntities() {
 		return entities;
 	}
 
+	/**
+	 * Returns the specified hardpoint relative to the entity.
+	 * 
+	 * @param point
+	 * @return
+	 */
 	public Point2D getHardPoint(int point) {
 		if (sprite == null) {
 			return null;
@@ -383,18 +600,38 @@ public class Entity {
 				location.getY() + hardPoint.getY());
 	}
 
+	/**
+	 * Returns the grounded state of the entity.
+	 * 
+	 * @return
+	 */
 	public boolean isGrounded() {
 		return grounded;
 	}
 
+	/**
+	 * Sets the entity's top speed to the specified value.
+	 * 
+	 * @param speed
+	 */
 	public void setSpeed(double speed) {
 		this.topSpeed = speed;
 	}
 
+	/**
+	 * Sets the entity's angle to the specified value.
+	 * 
+	 * @param angle
+	 */
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 
+	/**
+	 * Rotates all attached turrets to face the specified point.
+	 * 
+	 * @param point
+	 */
 	public void rotateTurrets(Point2D point) {
 		for (Entity e : entities) {
 			if (e instanceof Turret) {
