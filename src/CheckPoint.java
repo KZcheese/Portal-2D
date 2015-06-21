@@ -3,7 +3,7 @@
  * back at the last checkpoint they touched. TODO: Add in an activation
  * animation and possibly special effects on the player such as a heal or a
  * portal reset.
- * 
+ * TODO: Add an activation animation.
  * @author Kevin Zhan
  * @author Benjamin Hethington
  */

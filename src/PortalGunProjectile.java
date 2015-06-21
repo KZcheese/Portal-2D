@@ -1,3 +1,9 @@
+/**
+ * The Portal Gun's Projectile. Creates a portal upon colliding with a portalable surface.
+ * TODO: Everything
+ * @author Kevin Zhan
+ * @author Benjamin Hetheringon
+ */
 public class PortalGunProjectile extends Projectile {
 	public boolean color;
 
